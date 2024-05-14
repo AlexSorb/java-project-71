@@ -4,20 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+//import java.util.*;
 
-// Клвсс описывет нахождение разници между двумя строками формата JSON
 public class Differ {
 
-    public static Map<String, String> readJson(Path pathToFile) {
-        Map<String, String> result = null;
-        try {
-            result = new ObjectMapper().readValue(new File(pathToFile.toString()), Map.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static Map<String, Object> readJson(Path pathToFile) throws IOException {
+        Map<String, Object> result;
+        result = new ObjectMapper().readValue(new File(pathToFile.toString()), Map.class);
         return result;
     }
 
@@ -52,36 +49,39 @@ public class Differ {
     */
 
 
-    public static String generate(Map<String, String> first, Map<String, String> second) throws RuntimeException {
+    public static String generate(Map<String, Object> first, Map<String, Object> second) throws RuntimeException {
 
         StringBuilder result = new StringBuilder("{\n");
-        Set<String> setKey = new TreeSet<>();
-        setKey.addAll(first.keySet());
+        Set<String> setKey = new TreeSet<>(first.keySet());
         setKey.addAll(second.keySet());
 
         for (var key : setKey) {
             var containingInBothMaps = first.containsKey(key) && second.containsKey(key);
             String stack = "";
 
-            if (containingInBothMaps == true) {
+            if (containingInBothMaps) {
                 stack = first.get(key).equals(second.get(key)) ? " " + stack : "-+" + stack;
             } else {
-               stack = first.containsKey(key) ? "-" + stack : "+" + stack;
+                stack = first.containsKey(key) ? "-" + stack : "+" + stack;
             }
-            System.out.println(stack);
+
             for (var cheng : stack.toCharArray()) {
-                switch (cheng){
+                switch (cheng) {
                     case ' ':
-                        result.append(" " + " ").append(key + " " + first.get(key) + "\n");
+                        result.append("  ").append(key).append(": ").append(first.get(key).toString()).append("\n");
                         break;
                     case '+':
-                        result.append("+ " + key + " " + second.get(key)  + "\n");
+                        result.append("+ ").append(key).append(": ").append(second.get(key).toString()).append("\n");
                         break;
                     case '-':
-                        result.append("- " + key + " " + first.get(key)  + "\n");
+                        result.append("- ");
+                        result.append(key);
+                        result.append(": ");
+                        result.append(first.get(key).toString());
+                        result.append("\n");
                         break;
                     default:
-                        break;
+                        result.append("Error!");
                 }
             }
         }
