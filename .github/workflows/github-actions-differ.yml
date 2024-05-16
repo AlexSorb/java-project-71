@@ -1,0 +1,8 @@
+  name: GitHub Actions
+  run-name: Hexlet java-project-71
+  on: [push]
+  jobs:
+    Explore-GitHub-Actions:
+      runs-on: ubuntu-latest
+      steps:
+        - run: make build
