@@ -2,6 +2,7 @@ plugins {
     application
     id("io.freefair.lombok") version "8.1.0"
     id("checkstyle")
+    jacoco
 }
 
 group = "hexlet.code"
@@ -25,7 +26,18 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+
 }
 application {
     mainClass = "hexlet.code.App"
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+
 }
