@@ -20,7 +20,7 @@
           uses: gradle/actions/setup-gradle@v3
 
         - run: |
-            ls ${{ github.workspace }} 
+            ls -la ${{ github.workspace }} 
        
           
         - name: Build with Gradle Wrapper
