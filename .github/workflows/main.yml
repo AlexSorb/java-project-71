@@ -15,4 +15,4 @@
               coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/html/index.html:jacoco
         - run: ./gradlew checkstyleMain
         - run: ./gradlew test
-        - run: make build
+        - run: ./gradlew build
