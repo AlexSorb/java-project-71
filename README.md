@@ -3,7 +3,6 @@
 
 ### Badges
 [![Maintainability](https://api.codeclimate.com/v1/badges/5c23029fd84d3ef0e823/maintainability)](https://codeclimate.com/github/AlexSorb/java-project-71/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/5c23029fd84d3ef0e823/test_coverage)](https://codeclimate.com/github/AlexSorb/java-project-71/test_coverage)
 ![example workflow](https://github.com/AlexSorb/java-project-71/actions/workflows/main.yml/badge.svg)
 # Вычислитель отличий
 
