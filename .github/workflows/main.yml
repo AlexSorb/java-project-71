@@ -26,7 +26,7 @@
        
           
         - name: Build with Gradle Wrapper
-          run: ./app/gradlew build
+          run: ${{github.workspace}}/app/gradlew build
           
        
         
