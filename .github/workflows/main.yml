@@ -1,6 +1,6 @@
   name: GitHub Actions
   run-name: Hexlet java-project-71
-  on: [push]
+  on: [push, pull_request]
   jobs:
     Explore-GitHub-Actions:
       runs-on: ubuntu-latest
@@ -9,7 +9,7 @@
         - run: ./gradlew test
         - run: ./gradlew build
         - name: Publish code coverage
-          uses: paambaati/codeclimate-action@v6.0.0
+          uses: paambaati/codeclimate-action@v5.0.0
           env: 
              CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
              JACOCO_SOURCE_PATH: "${{github.workspace}}/src/main/java"

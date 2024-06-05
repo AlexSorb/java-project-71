@@ -21,14 +21,10 @@ public class App implements Callable<Integer> {
     private String format = "stylish";
 
 
-    @Parameters(index = "0", paramLabel = "filepath1", description = "path to first file"
-//            defaultValue = "/home/alex/java-project-71/app/File1.json"
-    )
+    @Parameters(index = "0", paramLabel = "filepath1", description = "path to first file")
     private String filepath1;
 
-    @Parameters(index = "1", paramLabel = "filepath2", description = "path to second file"
-//    defaultValue = "/home/alex/java-project-71/app/File2.json"
-      )
+    @Parameters(index = "1", paramLabel = "filepath2", description = "path to second file")
     private String filepath2;
 
     public static void main(String[] args)  {

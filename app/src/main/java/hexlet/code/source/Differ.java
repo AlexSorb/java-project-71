@@ -14,7 +14,8 @@ public class Differ {
 
     public static Map<String, Object> readJson(Path pathToFile) throws IOException {
         Map<String, Object> result;
-        result = new ObjectMapper().readValue(new File(pathToFile.toString()), Map.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        result = objectMapper.readValue(new File(pathToFile.toString()), Map.class);
         return result;
     }
 
