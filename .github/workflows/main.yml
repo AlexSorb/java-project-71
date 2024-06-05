@@ -5,6 +5,8 @@
     Explore-GitHub-Actions:
       runs-on: ubuntu-latest
       steps:
+        - run: |
+            ls ${{ github.workspace }}
         - run: ./gradlew checkstyleMain
         - run: ./gradlew test
         - run: ./gradlew build
