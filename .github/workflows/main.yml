@@ -15,14 +15,15 @@
           with:
             java-version: '21'
             distribution: 'temurin'
-        - uses: gradle/gradle-build-action@v3
-          with:
-            gradle-version: 8.6 
+            
+        - name: Setup Gradle
+          uses: gradle/actions/setup-gradle@v3
+          
+        - name: Build with Gradle Wrapper
+          run: ./app/gradlew build
+          
         - run: |
-            ls ${{ github.workspace }}
-        - run: ${{ github.workspace }}/app/gradlew build    
-        - run: ${{ github.workspace }}/app/gradlew checkstyleMain
-        - run: ${{ github.workspace }}/app/gradlew test
+            ls ${{ github.workspace }} 
        
         
         - name: Publish code coverage
