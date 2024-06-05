@@ -18,11 +18,12 @@
         - uses: gradle/gradle-build-action@v3
           with:
             gradle-version: 8.7 
+        - run: |
+            ls ${{ github.workspace }}
         - run: ./gradlew checkstyleMain
         - run: ./gradlew test
         - run: ./gradlew build
-        - run: |
-            ls ${{ github.workspace }}
+        
         - name: Publish code coverage
           uses: paambaati/codeclimate-action@v5.0.0
           env: 
