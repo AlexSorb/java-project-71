@@ -1,15 +1,28 @@
   name: GitHub Actions
   run-name: Hexlet java-project-71
-  on: [push, pull_request]
+  on: 
+    - push
+    - pull_request
   jobs:
-    Explore-GitHub-Actions:
+    build:
+    
       runs-on: ubuntu-latest
+      
       steps:
-        - run: |
-            ls ${{ github.workspace }}
+        - uses: actions/checkout@v3
+        - name: Set up JDK 21
+          uses: actions/setup-java@v4
+          with:
+            java-version: '21'
+            distribution: 'temurin'
+        - uses: gradle/gradle-build-action@v3
+          with:
+            gradle-version: 8.7 
         - run: ./gradlew checkstyleMain
         - run: ./gradlew test
         - run: ./gradlew build
+        - run: |
+            ls ${{ github.workspace }}
         - name: Publish code coverage
           uses: paambaati/codeclimate-action@v5.0.0
           env: 
