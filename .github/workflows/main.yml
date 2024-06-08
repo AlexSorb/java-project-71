@@ -8,8 +8,10 @@
       runs-on: ubuntu-latest
       steps:
         - run: echo hello actions
-    build:
-    
+    init:
+      runs-on: ubuntu-latest
+    buld:
+      needs: init
       runs-on: ubuntu-latest
       
       steps:
@@ -31,8 +33,9 @@
           
         - name: Build with Gradle Wrapper
           run: ${{github.workspace}}/app/gradlew build
-          
-       
+      test:    
+       needs: build
+       runs-on: ubuntu-latest
         
         - name: Publish code coverage
           uses: paambaati/codeclimate-action@v5.0.0
