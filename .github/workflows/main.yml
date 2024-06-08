@@ -4,6 +4,10 @@
     - push
     - pull_request
   jobs:
+    say_hello:
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo hello actions
     build:
     
       runs-on: ubuntu-latest
