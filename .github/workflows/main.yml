@@ -1,13 +1,16 @@
   name: GitHub Actions
   run-name: Hexlet java-project-71
   on: 
-    - push
-    - pull_request
+     push:
+     pull_request:
+
   jobs:
     say_hello:
       runs-on: ubuntu-latest
+      
       steps:
         - run: echo hello actions
+        
     buld:
       runs-on: ubuntu-latest
       
@@ -26,24 +29,4 @@
         - name: Build with Gradle
           run: ./gradlew build
             
-      #  - name: Setup Gradle
-      #   uses: gradle/actions/setup-gradle@v3
-      #    with:
-      #      gradle-version: '8.5'
-
-      #  - run: |
-      #      ls -la ${{ github.workspace }} 
-         
-          
-     # test:    
-    #   needs: build
-    #   runs-on: ubuntu-latest
-        
-    #    - name: Publish code coverage
-    #      uses: paambaati/codeclimate-action@v5.0.0
-    #      env: 
-   #          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-   #          JACOCO_SOURCE_PATH: "${{github.workspace}}/app/src/main/java"
-    #      with:
-    #          coverageCommand: make report
-    #          coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+      
