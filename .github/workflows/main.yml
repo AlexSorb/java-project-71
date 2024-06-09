@@ -1,5 +1,5 @@
-  name: GitHub Actions
-  run-name: Hexlet java-project-71
+  name: build
+  
   on: 
      push:
      pull_request:
