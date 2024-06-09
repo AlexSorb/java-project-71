@@ -28,7 +28,7 @@
           uses: gradle/gradle-build-action@v3
          
         - name: Build with Gradle
-          run: ./gradlew build
+          run: ./app/gradlew build
           
           
           
