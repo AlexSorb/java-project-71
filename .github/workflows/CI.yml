@@ -1,1 +1,13 @@
+name: CI
+run-name: ${{ github.actor }} is testing out GitHub Actions
+on: 
+  push:
+     branches: [ "main" ]
+  pull_request:
+      branches: [ "main" ]
 
+jobs:
+  Java-project-71:
+    runs-on: ubuntu-latest
+    steps: 
+      - run: echo Hello World!
