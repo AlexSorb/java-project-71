@@ -11,3 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - run: echo Hello World!
+      - run: make --version
+      - run: echo "Start build!"
+      - run: make build
