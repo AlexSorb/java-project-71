@@ -25,7 +25,11 @@ jobs:
           gradle-version: '8.7'
           
       - name: Start build
-        run: make build
+        run: |
+          cd ./app
+          gradlew build
         
       - name: Start help
-        run: make run-help
+        run: |
+          cd ./app
+          grablew test
