@@ -10,6 +10,20 @@ jobs:
   Java-project-71:
     runs-on: ubuntu-latest
     steps: 
+      - name: Checout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Java JDK  
+        uses: actions/setup-java@v4.2.2
+        with: 
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+        with:
+          gradle-version: '8.7'
+
       - run: echo Hello World!
       - run: make --version
       - run: echo "Start build!"
