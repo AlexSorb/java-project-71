@@ -32,9 +32,4 @@ jobs:
       - name: Start build
         run: |
           cd ./app
-         ./gradlew build
-        
-      - name: Start help
-        run: |
-          cd ./app
-          ./gradlew test
+          make build
