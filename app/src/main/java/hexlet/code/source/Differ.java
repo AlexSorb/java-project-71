@@ -90,4 +90,14 @@ public class Differ {
         return result.toString();
     }
 
+    public static String generate(Path filePath1, Path filePath2) {
+        String result = "";
+        var normalizedPath1 = filePath1.isAbsolute() ? filePath1 : filePath1.toAbsolutePath();
+        var normalizedPath2 = filePath2.isAbsolute() ? filePath2 : filePath2.toAbsolutePath();
+
+
+
+        return result;
+    }
+
 }

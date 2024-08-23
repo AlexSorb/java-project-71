@@ -9,4 +9,12 @@ public class FileManager {
     public static Path normaolizePath(String noNormPath) {
         return Paths.get(noNormPath).normalize().toAbsolutePath();
     }
-}
+
+    public static String readData(Path file) {
+        String data = "";
+        
+
+
+        return data;
+    }
+ }
