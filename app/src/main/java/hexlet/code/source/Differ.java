@@ -3,8 +3,11 @@ package hexlet.code.source;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -90,13 +93,26 @@ public class Differ {
         return result.toString();
     }
 
-    public static String generate(Path filePath1, Path filePath2) {
+    public static String generate(Path filePath1, Path filePath2) throws FileNotFoundException {
         String result = "";
+        // Преобразование отнасительных путей в абсолютные
         var normalizedPath1 = filePath1.isAbsolute() ? filePath1 : filePath1.toAbsolutePath();
         var normalizedPath2 = filePath2.isAbsolute() ? filePath2 : filePath2.toAbsolutePath();
 
+        // Проверка на существование файлов для чтения
+        if (Files.notExists(normalizedPath1) || Files.notExists(normalizedPath2)) {
+            throw new FileNotFoundException("Файл для чтения не найден");
+        }
 
-
+        // Чтение данных из файлов
+        List<String> dataFile1;
+        List<String> dataFile2;
+        try {
+            dataFile1 = Files.readAllLines(normalizedPath1);
+            dataFile2 = Files.readAllLines(normalizedPath2);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return result;
     }
 

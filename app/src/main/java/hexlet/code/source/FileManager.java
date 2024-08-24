@@ -12,9 +12,6 @@ public class FileManager {
 
     public static String readData(Path file) {
         String data = "";
-        
-
-
         return data;
     }
- }
+}
