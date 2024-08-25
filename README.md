@@ -2,9 +2,10 @@
 [![Actions Status](https://github.com/AlexSorb/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AlexSorb/java-project-71/actions)
 
 ### Badges
+[![CI](https://github.com/AlexSorb/java-project-71/actions/workflows/CI.yml/badge.svg)](https://github.com/AlexSorb/java-project-71/actions/workflows/CI.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/5c23029fd84d3ef0e823/maintainability)](https://codeclimate.com/github/AlexSorb/java-project-71/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5c23029fd84d3ef0e823/test_coverage)](https://codeclimate.com/github/AlexSorb/java-project-71/test_coverage)
-[![CI](https://github.com/AlexSorb/java-project-71/actions/workflows/CI.yml/badge.svg)](https://github.com/AlexSorb/java-project-71/actions/workflows/CI.yml)
+
 # Вычислитель отличий
 
 Вычислитель отличий – программа, определяющая разницу между двумя структурами данных.
