@@ -10,8 +10,8 @@ public class OpenFileTest {
 
     @Test
     public void testOpenFile() {
-        String relativePath = "./src/test/resurce/File1";
-        var absolutePath = new File(path).getAbsolutePath();
+        String relativePath = "/src/test/resurce/File1";
+        var absolutePath = new File(relativePath).getAbsolutePath();
         assertEquals(FileManager.normaolizePath(relativePath).toString(), absolutePath.toString());
     }
 }
