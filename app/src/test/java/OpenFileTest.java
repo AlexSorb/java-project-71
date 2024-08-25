@@ -1,7 +1,7 @@
 import hexlet.code.source.FileManager;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Paths;
+
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

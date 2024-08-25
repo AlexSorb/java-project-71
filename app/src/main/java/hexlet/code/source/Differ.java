@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -94,7 +93,8 @@ public class Differ {
     }
 
     public static String generate(Path filePath1, Path filePath2) throws FileNotFoundException {
-        String result = "";
+        StringBuilder result = new StringBuilder("{\n");
+
         // Преобразование отнасительных путей в абсолютные
         var normalizedPath1 = filePath1.isAbsolute() ? filePath1 : filePath1.toAbsolutePath();
         var normalizedPath2 = filePath2.isAbsolute() ? filePath2 : filePath2.toAbsolutePath();
@@ -104,16 +104,29 @@ public class Differ {
             throw new FileNotFoundException("Файл для чтения не найден");
         }
 
-        // Чтение данных из файлов
-        List<String> dataFile1;
-        List<String> dataFile2;
+//        // Чтение данных из файлов
+//        List<String> dataFile1;
+//        List<String> dataFile2;
+//        try {
+//            dataFile1 = Files.readAllLines(normalizedPath1);
+//            dataFile2 = Files.readAllLines(normalizedPath2);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        // ПРочитать Json
+        var om = new ObjectMapper();
+
         try {
-            dataFile1 = Files.readAllLines(normalizedPath1);
-            dataFile2 = Files.readAllLines(normalizedPath2);
+            var dataFile1 = om.readValue(normalizedPath1.toFile(), Map.class);
+            var dataFile2 = om.readValue(normalizedPath2.toFile(), Map.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return result;
+
+        // Сравнить данные
+        result.append("}");
+        return result.toString();
     }
 
 }
