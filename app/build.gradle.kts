@@ -29,7 +29,11 @@ tasks.test {
 
 }
 
-tasks.jacocoTestReport { reports { xml.required.set(true) } }
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+    }
+}
 
 application {
     mainClass = "hexlet.code.App"
