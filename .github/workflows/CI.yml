@@ -9,6 +9,11 @@ on:
 jobs:
   Java-project-71:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.workspace }}/app
+        
     steps: 
       - name: Checout code
         uses: actions/checkout@v4
