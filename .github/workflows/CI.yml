@@ -28,11 +28,11 @@ jobs:
 
       - name: Java version 
         run: java --version 
-        
+
+      - name: Go to Direct
+        run:  cd ${{ github.workspace }}/app
       - name: Start build
-        run: |
-          cd ${{ github.workspace }}/app
-          make build
+        run: make build
           
       - name: Start test
         run: |
