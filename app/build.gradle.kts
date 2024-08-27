@@ -2,7 +2,7 @@ plugins {
     application
     id("io.freefair.lombok") version "8.1.0"
     id("checkstyle")
-    jacoco
+    id("jacoco")
 }
 
 group = "hexlet.code"
@@ -29,9 +29,15 @@ tasks.test {
 
 }
 
+jacoco {
+    toolVersion = "0.8.12"
+}
+
 tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
+        html.required.set(true)
+        csv.required.set(false)
     }
 }
 
@@ -39,7 +45,3 @@ application {
     mainClass = "hexlet.code.App"
 }
 
-jacoco {
-    toolVersion = "0.8.12"
-
-}
