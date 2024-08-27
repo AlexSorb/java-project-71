@@ -31,8 +31,14 @@ jobs:
         
       - name: Start build
         run: |
-          cd ./app
+          cd ${{ github.workspace }}/app
           make build
+          
+      - name: Start test
+        run: |
+          cd ${{ github.workspace }}/app
+          make test
+          
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
         env:
