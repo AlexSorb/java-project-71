@@ -29,10 +29,10 @@ jobs:
       - name: Java version 
         run: java --version 
 
-      - name: Go to Direct
-        run:  cd ${{ github.workspace }}/app
       - name: Start build
-        run: make build
+        run: |
+          cd ${{ github.workspace }}/app
+          make build
           
       - name: Start test
         run: |
@@ -45,5 +45,7 @@ jobs:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
           JACOCO_SOURCE_PATH: ${{github.workspace}}/app/src/main/java
         with:
-          coverageCommand: make report
+          coverageCommand: |
+            cd ${{ github.workspace }}/app
+            make report
           coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
