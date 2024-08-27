@@ -1,8 +1,10 @@
 plugins {
     application
-    id("io.freefair.lombok") version "8.1.0"
+    jacoco
+    id("io.freefair.lombok") version "8.6"
     id("checkstyle")
-    id("jacoco")
+    id("com.github.ben-manes.versions") version "0.50.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "hexlet.code"
@@ -10,6 +12,10 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClass.set("hexlet.code.App")
 }
 
 dependencies {
@@ -29,10 +35,6 @@ tasks.test {
 
 }
 
-jacoco {
-    toolVersion = "0.8.12"
-}
-
 tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
@@ -41,7 +43,5 @@ tasks.jacocoTestReport {
     }
 }
 
-application {
-    mainClass = "hexlet.code.App"
-}
+
 
