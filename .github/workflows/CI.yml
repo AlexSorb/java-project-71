@@ -28,21 +28,12 @@ jobs:
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
         with:
           gradle-version: '8.7'
-      - name: Gradle version 
-        run: gradle  -v
-
-      - name: Java version 
-        run: java --version 
 
       - name: Start build
-        run: |
-          cd ${{ github.workspace }}/app
-          make build
+        run: make build
           
       - name: Start test
-        run: |
-          cd ${{ github.workspace }}/app
-          make test
+        run: make test
           
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
