@@ -7,9 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 //import java.util.*;
 
 public class Differ {
@@ -93,7 +91,7 @@ public class Differ {
     }
 
     public static String generate(Path filePath1, Path filePath2) throws FileNotFoundException {
-        StringBuilder result = new StringBuilder("{\n");
+
 
         // Преобразование отнасительных путей в абсолютные
         var normalizedPath1 = filePath1.isAbsolute() ? filePath1 : filePath1.toAbsolutePath();
@@ -117,14 +115,30 @@ public class Differ {
         // ПРочитать Json
         var om = new ObjectMapper();
 
+        Map<String, Object> dataFile1;
+        Map<String, Object> dataFile2;
+
         try {
-            var dataFile1 = om.readValue(normalizedPath1.toFile(), Map.class);
-            var dataFile2 = om.readValue(normalizedPath2.toFile(), Map.class);
+             dataFile1 = om.readValue(normalizedPath1.toFile(), Map.class);
+             dataFile2 = om.readValue(normalizedPath2.toFile(), Map.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         // Сравнить данные
+        StringBuilder result = new StringBuilder("{\n");
+
+        Map<String, List<Object>> data = new HashMap<>();
+
+        for (var file : dataFile1.keySet()) {
+            ;
+        }
+
+        for (var file : dataFile2.keySet()) {
+            ;
+        }
+
+
         result.append("}");
         return result.toString();
     }
