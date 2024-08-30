@@ -126,18 +126,69 @@ public class Differ {
         }
 
         // Сравнить данные
-        StringBuilder result = new StringBuilder("{\n");
+
 
         Map<String, List<Object>> data = new HashMap<>();
 
-        for (var file : dataFile1.keySet()) {
-            ;
+        // Получить данные из обекта1
+        for (var key : dataFile1.keySet()) {
+            if (!data.containsKey(key)) {
+                List<Object> dataValue = new ArrayList<>();
+                data.put(key, dataValue);
+            }
+            var value = data.get(key);
+            value.add(dataFile1.get(key));
         }
 
-        for (var file : dataFile2.keySet()) {
-            ;
+        // Получить данные из обекта2
+        for (var key : dataFile2.keySet()) {
+            if (!data.containsKey(key)) {
+                List<Object> dataValue = new ArrayList<>();
+                data.put(key, dataValue);
+            }
+            var value = data.get(key);
+            value.add(dataFile1.get(key));
         }
 
+
+
+        // Сформировать результат
+        StringBuilder result = new StringBuilder("{\n");
+
+        for (var key : data.keySet()) {
+            var value = data.get(key);
+            String add = "";
+            if (value.size() <= 2) {
+                String temp = key + " " + value;
+                add = dataFile2.containsKey(key) ? "+ " + temp : "- " + temp;
+            } else {
+                boolean isEquals = true;
+                for (int i = 0; i < value.size(); i++) {
+                    if (i == 0) {
+                        continue;
+                    }
+                    var lastValue = value.get(i - 1);
+                    var currentValue = value.get(i);
+                    if (!currentValue.equals(lastValue)) {
+                        isEquals = false;
+                        break;
+                    }
+                }
+
+
+                if (isEquals) {
+                    add = "  " + key + " " + value.get(1);
+                } else {
+                    for (int i = 0; i < value.size() - 1; i++) {
+                        add += "- " + "  " + key + " " + value.get(i) + "\n";
+                    }
+                    add += "+ " + "  " + key + " " + value.get(value.size() - 1) + "\n";
+                }
+            }
+
+            result.append(add)
+                    .append("\n");
+        }
 
         result.append("}");
         return result.toString();
