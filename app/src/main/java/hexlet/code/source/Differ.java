@@ -159,7 +159,7 @@ public class Differ {
         // Сформировать результат
         StringBuilder result = new StringBuilder("{\n");
 
-        var sortedKeySet = data.keySet().stream().sorted().toList();// Сортировка набора ключей
+        var sortedKeySet = data.keySet().stream().sorted().toList(); // Сортировка набора ключей
         for (var key : sortedKeySet) {
             var value = data.get(key);
             String add = "";
@@ -169,8 +169,8 @@ public class Differ {
             } else {
                 String firstValue = value.get(0).toString();
                 String lastValue = value.get(1).toString();
-                add = firstValue.equals(lastValue) ? "  " + key + ": " + firstValue:
-                        "- " + key + ": " + firstValue + "\n" + "+ " + key + ": " + lastValue;
+                add = firstValue.equals(lastValue) ? "  " + key + ": " + firstValue
+                        : "- " + key + ": " + firstValue + "\n" + "+ " + key + ": " + lastValue;
             }
 
             result.append(add)

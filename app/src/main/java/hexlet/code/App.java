@@ -7,6 +7,7 @@ import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Option;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -46,7 +47,7 @@ public class App implements Callable<Integer> {
             try {
                 readfile1 = Differ.readJson(FileManager.normaolizePath(this.filepath1));
                 readfile2 = Differ.readJson(FileManager.normaolizePath(this.filepath2));
-                comparison = Differ.generate(readfile1, readfile2);
+                comparison = Differ.generate(Path.of(filepath1), Path.of(filepath2));
             } catch (IOException e) {
                 System.out.println("Ошибка чтения");
                 e.printStackTrace();

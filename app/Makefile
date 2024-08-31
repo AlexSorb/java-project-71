@@ -11,7 +11,7 @@ run-help: build install
 	./build/install/app/bin/app -h
 
 run-all-argunm: build install
-	./build/install/app/bin/app -f=stylish ./app/File1.json /home/alex/java-project-71/app/File2.json
+	./build/install/app/bin/app -f=stylish src/test/java/resources/File1.json src/test/java/resources/File2.json
 
 test:
 	./gradlew test
