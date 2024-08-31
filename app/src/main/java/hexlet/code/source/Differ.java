@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 //import java.util.*;
 
-public class Differ {
+public class Differ  {
 
     public static Map<String, Object> readJson(Path pathToFile) throws IOException {
         Map<String, Object> result;
@@ -27,27 +27,15 @@ public class Differ {
 
 
         // Преобразование отнасительных путей в абсолютные
-        var normalizedPath1 = filePath1.isAbsolute() ? filePath1 : filePath1.toAbsolutePath();
-        var normalizedPath2 = filePath2.isAbsolute() ? filePath2 : filePath2.toAbsolutePath();
+        var normalizedPath1 = FileManager.normaolizePath(filePath1);
+        var normalizedPath2 = FileManager.normaolizePath(filePath2);
 
         // Проверка на существование файлов для чтения
         if (Files.notExists(normalizedPath1) || Files.notExists(normalizedPath2)) {
             throw new FileNotFoundException("Файл для чтения не найден");
         }
-
-//        // Чтение данных из файлов
-//        List<String> dataFile1;
-//        List<String> dataFile2;
-//        try {
-//            dataFile1 = Files.readAllLines(normalizedPath1);
-//            dataFile2 = Files.readAllLines(normalizedPath2);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
         // ПРочитать Json
         var om = new ObjectMapper();
-
         Map<String, Object> dataFile1;
         Map<String, Object> dataFile2;
 

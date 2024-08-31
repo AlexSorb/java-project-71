@@ -1,17 +1,24 @@
 package hexlet.code.source;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 
 // Класс описывает работу с дерикотриями и прочтением данных из файла
 public class FileManager {
 
-    public static Path normaolizePath(String noNormPath) {
-        return Paths.get(noNormPath).normalize().toAbsolutePath();
+    public static Path normaolizePath(Path noNormPath) {
+        return noNormPath.normalize().toAbsolutePath();
     }
 
     public static String readData(Path file) {
-        String data = "";
-        return data;
+        List<String> dataFile;
+        try {
+            dataFile = Files.readAllLines(FileManager.normaolizePath(file));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return dataFile.toString();
     }
 }
