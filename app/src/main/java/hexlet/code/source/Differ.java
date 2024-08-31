@@ -7,7 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.ArrayList;
 //import java.util.*;
 
 public class Differ {
@@ -119,8 +124,8 @@ public class Differ {
         Map<String, Object> dataFile2;
 
         try {
-             dataFile1 = om.readValue(normalizedPath1.toFile(), Map.class);
-             dataFile2 = om.readValue(normalizedPath2.toFile(), Map.class);
+            dataFile1 = om.readValue(normalizedPath1.toFile(), Map.class);
+            dataFile2 = om.readValue(normalizedPath2.toFile(), Map.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -128,62 +133,44 @@ public class Differ {
         // Сравнить данные
 
 
-        Map<String, List<Object>> data = new HashMap<>();
+        Map<String, List<String>> data = new HashMap<>();
 
         // Получить данные из обекта1
         for (var key : dataFile1.keySet()) {
             if (!data.containsKey(key)) {
-                List<Object> dataValue = new ArrayList<>();
+                List<String> dataValue = new ArrayList<>();
                 data.put(key, dataValue);
             }
             var value = data.get(key);
-            value.add(dataFile1.get(key));
+            value.add(dataFile1.get(key).toString());
         }
 
         // Получить данные из обекта2
         for (var key : dataFile2.keySet()) {
             if (!data.containsKey(key)) {
-                List<Object> dataValue = new ArrayList<>();
+                List<String> dataValue = new ArrayList<>();
                 data.put(key, dataValue);
             }
             var value = data.get(key);
-            value.add(dataFile1.get(key));
+            value.add(dataFile2.get(key).toString());
         }
-
 
 
         // Сформировать результат
         StringBuilder result = new StringBuilder("{\n");
 
-        for (var key : data.keySet()) {
+        var sortedKeySet = data.keySet().stream().sorted().toList();// Сортировка набора ключей
+        for (var key : sortedKeySet) {
             var value = data.get(key);
             String add = "";
-            if (value.size() <= 2) {
-                String temp = key + " " + value;
+            if (value.size() < 2) {
+                String temp = key + ": " + value.get(0).toString();
                 add = dataFile2.containsKey(key) ? "+ " + temp : "- " + temp;
             } else {
-                boolean isEquals = true;
-                for (int i = 0; i < value.size(); i++) {
-                    if (i == 0) {
-                        continue;
-                    }
-                    var lastValue = value.get(i - 1);
-                    var currentValue = value.get(i);
-                    if (!currentValue.equals(lastValue)) {
-                        isEquals = false;
-                        break;
-                    }
-                }
-
-
-                if (isEquals) {
-                    add = "  " + key + " " + value.get(1);
-                } else {
-                    for (int i = 0; i < value.size() - 1; i++) {
-                        add += "- " + "  " + key + " " + value.get(i) + "\n";
-                    }
-                    add += "+ " + "  " + key + " " + value.get(value.size() - 1) + "\n";
-                }
+                String firstValue = value.get(0).toString();
+                String lastValue = value.get(1).toString();
+                add = firstValue.equals(lastValue) ? "  " + key + ": " + firstValue:
+                        "- " + key + ": " + firstValue + "\n" + "+ " + key + ": " + lastValue;
             }
 
             result.append(add)

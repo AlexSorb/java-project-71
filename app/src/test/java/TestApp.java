@@ -40,6 +40,7 @@ public class TestApp {
                 + "+ verbose: true\n"
                 + "}";
         var result = Differ.generate(firstJson, secondJson);
+        System.out.println(result);
         assertEquals(result, rightAnswer);
     }
 

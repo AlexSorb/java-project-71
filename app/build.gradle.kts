@@ -3,8 +3,6 @@ plugins {
     jacoco
     id("io.freefair.lombok") version "8.6"
     id("checkstyle")
-    id("com.github.ben-manes.versions") version "0.50.0"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "hexlet.code"
@@ -24,6 +22,7 @@ dependencies {
     annotationProcessor ("info.picocli:picocli-codegen:4.7.5")
 
     // Работа с Jackson ObjectMapper
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
