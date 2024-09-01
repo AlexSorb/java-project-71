@@ -1,7 +1,6 @@
 import hexlet.code.App;
 import hexlet.code.source.Differ;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
@@ -22,12 +21,12 @@ public class TestApp {
         Path jsonFilePath = Paths.get("src/test/java/resources/File1.json").toAbsolutePath();
         var readingJson = Differ.readJson(jsonFilePath);
         var rightAnswer =  Map.of(
-                "follow", "false",
-                "timeout", "50",
-                "host", "hexlet.io",
-                "proxy", "123.234.53.22"
+                "host" ,"hexlet.io",
+                "timeout", 50,
+                "proxy", "123.234.53.22",
+                "follow", false
         );
-        assertEquals(readingJson.toString(), readingJson.toString());
+        assertEquals(readingJson, rightAnswer);
     }
 
 }
