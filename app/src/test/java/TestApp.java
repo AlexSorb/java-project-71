@@ -21,7 +21,7 @@ public class TestApp {
         Path jsonFilePath = Paths.get("src/test/java/resources/File1.json").toAbsolutePath();
         var readingJson = Differ.readJson(jsonFilePath);
         var rightAnswer =  Map.of(
-                "host" ,"hexlet.io",
+                "host", "hexlet.io",
                 "timeout", 50,
                 "proxy", "123.234.53.22",
                 "follow", false
