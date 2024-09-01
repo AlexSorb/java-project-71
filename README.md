@@ -3,8 +3,8 @@
 
 ### Badges
 [![CI](https://github.com/AlexSorb/java-project-71/actions/workflows/CI.yml/badge.svg)](https://github.com/AlexSorb/java-project-71/actions/workflows/CI.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/5c23029fd84d3ef0e823/maintainability)](https://codeclimate.com/github/AlexSorb/java-project-71/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/5c23029fd84d3ef0e823/test_coverage)](https://codeclimate.com/github/AlexSorb/java-project-71/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6c1025ca0b691c303559/maintainability)](https://codeclimate.com/github/AlexSorb/java-project-71/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6c1025ca0b691c303559/test_coverage)](https://codeclimate.com/github/AlexSorb/java-project-71/test_coverage)
 
 # Вычислитель отличий
 
