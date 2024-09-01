@@ -47,5 +47,6 @@ jobs:
           JACOCO_SOURCE_PATH: "${{github.workspace}}/app/src/main/java"
         with:
             # The report file must be there, otherwise Code Climate won't find it
-            coverageCommand: cd ${{github.workspace}}/app; make report
+            workingDirectory: ${{github.workspace}}/app
+            coverageCommand: make report
             coverageLocations: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
