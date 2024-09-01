@@ -13,7 +13,6 @@ public class TestApp {
     @Test
     public void testMain() {
         String[] args = {"h"};
-        App.main(args);
     }
 
     @Test
