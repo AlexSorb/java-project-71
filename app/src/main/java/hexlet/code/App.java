@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.source.FileManager;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -8,7 +7,6 @@ import picocli.CommandLine.Option;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import hexlet.code.source.Differ;

@@ -1,10 +1,8 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.App;
 import hexlet.code.source.Differ;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,9 +11,8 @@ import java.util.Map;
 
 public class TestApp {
 
-
     @Test
-    public void testMain(){
+    public void testMain() {
         String[] args = {"h"};
         App.main(args);
     }
@@ -30,7 +27,7 @@ public class TestApp {
                 "host", "hexlet.io",
                 "proxy", "123.234.53.22"
         );
-        assertTrue(readingJson.toString().equals(readingJson.toString()));
+        assertEquals(readingJson.toString(), readingJson.toString());
     }
 
 }
