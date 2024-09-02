@@ -18,12 +18,13 @@ application {
 
 dependencies {
     // Работа с picocli
-    implementation("info.picocli:picocli:4.7.5")
-    annotationProcessor ("info.picocli:picocli-codegen:4.7.5")
+    implementation ("info.picocli:picocli:4.7.6")
+    annotationProcessor ("info.picocli:picocli-codegen:4.7.6")
 
     // Работа с Jackson ObjectMapper
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.0-rc1")
+
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")

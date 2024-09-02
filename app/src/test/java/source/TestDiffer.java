@@ -54,7 +54,7 @@ public class TestDiffer {
     }
 
     @Test
-    public void testRead() throws IOException {
+    public void testReadJson() throws IOException {
         Path jsonFilePath = Paths.get("src/test/java/resources/File1.json").toAbsolutePath();
         var readingJson = Differ.readJson(jsonFilePath);
         var rightAnswer =  Map.of(
@@ -64,5 +64,46 @@ public class TestDiffer {
                 "follow", false
         );
         assertEquals(readingJson, rightAnswer);
+    }
+
+    // Тесты стравнения yaml
+
+    // Тестирование сравнения
+    @Test
+    public void testGenerateYaml() {
+        Path yamlFile1 = Paths.get("src/test/resources/TestYamlFile1.yaml").toAbsolutePath();
+        Path yamlFile2 = Paths.get("src/test/resources/TestYamlFile2.yaml").toAbsolutePath();
+
+        var difference = Differ.generateYaml(yamlFile1, yamlFile2);
+        assertEquals(difference, differs);
+    }
+
+    // Тестировние парсинга yaml
+    @Test
+    public void testParsingYaml() {
+        Path yamlFile = Paths.get("src/test/resources/TestYamlFile.yaml").toAbsolutePath();
+        String pars = "host: hexlet.io\n" +
+                "timeout: 50\n" +
+                "proxy: 123.234.53.22\n" +
+                "follow: false";
+        assert Differ.readYaml(yamlFile) != null;
+        assertEquals(Differ.readYaml(yamlFile).toString(), pars);
+    }
+
+    // Тестирование ошибки несуществования одного из фалов
+    @Test
+    public void testNotExistFile(){
+        Path existFilePath = Paths.get("src/test/resources/TestYamlFile.yaml").toAbsolutePath();
+        Path notExistFilePath = Paths.get("src/test/resources/WrongYamlFile.yaml").toAbsolutePath();
+
+        var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {
+            Differ.generateYaml(notExistFilePath, existFilePath);
+        });
+        assertEquals("Файл для чтения не найден", thrownFirstArg.getMessage());
+
+        var thrownSecondArg = assertThrows(FileNotFoundException.class, () -> {
+            Differ.generateYaml(existFilePath, notExistFilePath);
+        });
+        assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
     }
 }

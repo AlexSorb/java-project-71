@@ -2,7 +2,6 @@ package hexlet.code.source;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,10 +13,10 @@ import java.util.ArrayList;
 
 public class Differ  {
 
-    public static Map<String, Object> readJson(Path pathToFile) throws IOException {
+    public static Map<String, Object> readJson(Path path) throws IOException {
         Map<String, Object> result;
-        ObjectMapper objectMapper = new ObjectMapper();
-        result = objectMapper.readValue(new File(pathToFile.toString()), Map.class);
+        ObjectMapper om = new ObjectMapper();
+        result = om.readValue(path.toFile(), Map.class);
         return result;
     }
 
@@ -34,13 +33,12 @@ public class Differ  {
             throw new FileNotFoundException("Файл для чтения не найден");
         }
         // ПРочитать Json
-        var om = new ObjectMapper();
         Map<String, Object> dataFile1;
         Map<String, Object> dataFile2;
 
         try {
-            dataFile1 = om.readValue(normalizedPath1.toFile(), Map.class);
-            dataFile2 = om.readValue(normalizedPath2.toFile(), Map.class);
+            dataFile1 = readJson(normalizedPath1);
+            dataFile2 = readJson(normalizedPath2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -96,4 +94,11 @@ public class Differ  {
         return result.toString();
     }
 
+    // Чтение Yaml из файла
+    public static Map<String, Object> readYaml(Path file) {
+        return null;
+    }
+    public static String generateYaml(Path filePath1, Path filePath2) {
+        return "";
+    }
 }
