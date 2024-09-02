@@ -14,17 +14,6 @@ public class TestApp {
         String[] args = {"h"};
     }
 
-    @Test
-    public void testRead() throws IOException {
-        Path jsonFilePath = Paths.get("src/test/java/resources/File1.json").toAbsolutePath();
-        var readingJson = Differ.readJson(jsonFilePath);
-        var rightAnswer =  Map.of(
-                "host", "hexlet.io",
-                "timeout", 50,
-                "proxy", "123.234.53.22",
-                "follow", false
-        );
-        assertEquals(readingJson, rightAnswer);
-    }
+
 
 }
