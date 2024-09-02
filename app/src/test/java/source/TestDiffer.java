@@ -42,12 +42,12 @@ public class TestDiffer {
         Path wrongFile = Path.of("src/test/java/wrongFIle.json").toAbsolutePath();
 
 
-        var thrownFirstArg = assertThrows(FileNotFoundException.class, () ->{
+        var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {
             Differ.generate(wrongFile, file1);
-                });
+        });
         assertEquals("Файл для чтения не найден", thrownFirstArg.getMessage());
 
-        var thrownSecondArg = assertThrows(FileNotFoundException.class, () ->{
+        var thrownSecondArg = assertThrows(FileNotFoundException.class, () -> {
             Differ.generate(file1, wrongFile);
         });
         assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
