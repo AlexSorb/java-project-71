@@ -75,10 +75,11 @@ public class Differ  {
         var sortedKeySet = data.keySet().stream().sorted().toList(); // Сортировка набора ключей
         for (var key : sortedKeySet) {
             var value = data.get(key);
+
             String add = "";
             if (value.size() < 2) {
-                String temp = key + ": " + value.get(0).toString();
-                add = dataFile2.containsKey(key) ? "+ " + temp : "- " + temp;
+                add = key + ": " + value.get(0).toString();
+                add = dataFile2.containsKey(key) ? "+ " + add : "- " + add;
             } else {
                 String firstValue = value.get(0).toString();
                 String lastValue = value.get(1).toString();
