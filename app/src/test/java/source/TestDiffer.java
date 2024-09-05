@@ -66,6 +66,7 @@ public class TestDiffer {
         assertEquals(readingJson, rightAnswer);
     }
 
+
     // Тесты стравнения yaml
 
     // Тестирование сравнения

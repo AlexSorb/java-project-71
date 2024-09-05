@@ -96,7 +96,7 @@ public class Differ  {
         result.append("}");
         return result.toString();
     }
-
+  
     // Чтение Yaml из файла
     public static Map<String, Object> readYaml(Path file) throws IOException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
