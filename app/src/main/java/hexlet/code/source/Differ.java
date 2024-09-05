@@ -95,11 +95,4 @@ public class Differ  {
         return result.toString();
     }
 
-    // Чтение Yaml из файла
-    public static Map<String, Object> readYaml(Path file) {
-        return null;
-    }
-    public static String generateYaml(Path filePath1, Path filePath2) {
-        return "";
-    }
 }
