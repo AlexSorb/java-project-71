@@ -71,29 +71,39 @@ public class TestDiffer {
     // Тестирование сравнения
     @Test
     public void testGenerateYaml() {
-        Path yamlFile1 = Paths.get("src/test/resources/TestYamlFile1.yaml").toAbsolutePath();
-        Path yamlFile2 = Paths.get("src/test/resources/TestYamlFile2.yaml").toAbsolutePath();
+        Path yamlFile1 = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
+        Path yamlFile2 = Paths.get("src/test/java/resources/TestYamlFile2.yaml").toAbsolutePath();
 
-        var difference = Differ.generateYaml(yamlFile1, yamlFile2);
+        String difference = null;
+        try {
+            difference = Differ.generateYaml(yamlFile1, yamlFile2);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(difference, differs);
     }
 
     // Тестировние парсинга yaml
     @Test
     public void testParsingYaml() {
-        Path yamlFile = Paths.get("src/test/resources/TestYamlFile.yaml").toAbsolutePath();
-        String pars = "host: hexlet.io\n" +
-                "timeout: 50\n" +
-                "proxy: 123.234.53.22\n" +
-                "follow: false";
-        assert Differ.readYaml(yamlFile) != null;
-        assertEquals(Differ.readYaml(yamlFile).toString(), pars);
+        Path yamlFile = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
+        String pars = "{host=hexlet.io, " +
+                "timeout=50, " +
+                "proxy=123.234.53.22, " +
+                "follow=false}";
+
+        try {
+            assert Differ.readYaml(yamlFile) != null;
+            assertEquals(pars, Differ.readYaml(yamlFile).toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Тестирование ошибки несуществования одного из фалов
     @Test
     public void testNotExistFile(){
-        Path existFilePath = Paths.get("src/test/resources/TestYamlFile.yaml").toAbsolutePath();
+        Path existFilePath = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
         Path notExistFilePath = Paths.get("src/test/resources/WrongYamlFile.yaml").toAbsolutePath();
 
         var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {

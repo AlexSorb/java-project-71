@@ -30,9 +30,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.0-rc1")
 
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.0-rc1")
-
 
 
 
