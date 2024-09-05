@@ -22,8 +22,19 @@ dependencies {
     annotationProcessor ("info.picocli:picocli-codegen:4.7.6")
 
     // Работа с Jackson ObjectMapper
+
+    //Json parser
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.18.0-rc1")
+    //Yaml parser
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.0-rc1")
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.0-rc1")
+
+
+
 
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
