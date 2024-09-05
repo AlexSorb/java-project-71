@@ -2,7 +2,6 @@ package hexlet.code.source;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -96,7 +95,6 @@ public class Differ  {
         result.append("}");
         return result.toString();
     }
-  
     // Чтение Yaml из файла
     public static Map<String, Object> readYaml(Path file) throws IOException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());

@@ -88,10 +88,7 @@ public class TestDiffer {
     @Test
     public void testParsingYaml() {
         Path yamlFile = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
-        String pars = "{host=hexlet.io, " +
-                "timeout=50, " +
-                "proxy=123.234.53.22, " +
-                "follow=false}";
+        String pars = "{host=hexlet.io, " + "timeout=50, " + "proxy=123.234.53.22, " + "follow=false}";
 
         try {
             assert Differ.readYaml(yamlFile) != null;
@@ -103,7 +100,7 @@ public class TestDiffer {
 
     // Тестирование ошибки несуществования одного из фалов
     @Test
-    public void testNotExistFile(){
+    public void testNotExistFile() {
         Path existFilePath = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
         Path notExistFilePath = Paths.get("src/test/resources/WrongYamlFile.yaml").toAbsolutePath();
 
