@@ -1,8 +1,5 @@
 package hexlet.code.source;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,7 +9,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-import hexlet.code.source.Parsers;
+
 
 public class Differ  {
 
