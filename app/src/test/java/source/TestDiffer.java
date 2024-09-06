@@ -28,7 +28,7 @@ public class TestDiffer {
         String result = "";
         try {
             result = Differ.generate(file1, file2);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         System.out.println(result);

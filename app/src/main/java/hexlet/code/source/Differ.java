@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Differ  {
 
-    public static String generate(Path filePath1, Path filePath2) throws FileNotFoundException {
+    public static String generate(Path filePath1, Path filePath2) throws IOException {
 
 
         // Преобразование отнасительных путей в абсолютные
@@ -25,41 +25,11 @@ public class Differ  {
             throw new FileNotFoundException("Файл для чтения не найден");
         }
         // ПРочитать Json
-        Map<String, Object> dataFile1;
-        Map<String, Object> dataFile2;
-
-        try {
-            dataFile1 = Parsers.parserJson(normalizedPath1);
-            dataFile2 = Parsers.parserJson(normalizedPath2);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        var dataFile1 = Parsers.parserJson(normalizedPath1);
+        var dataFile2 = Parsers.parserJson(normalizedPath2);
 
         // Сравнить данные
-
-
-        Map<String, List<String>> data = new HashMap<>();
-
-        // Получить данные из обекта1
-        for (var key : dataFile1.keySet()) {
-            if (!data.containsKey(key)) {
-                List<String> dataValue = new ArrayList<>();
-                data.put(key, dataValue);
-            }
-            var value = data.get(key);
-            value.add(dataFile1.get(key).toString());
-        }
-
-        // Получить данные из обекта2
-        for (var key : dataFile2.keySet()) {
-            if (!data.containsKey(key)) {
-                List<String> dataValue = new ArrayList<>();
-                data.put(key, dataValue);
-            }
-            var value = data.get(key);
-            value.add(dataFile2.get(key).toString());
-        }
-
+        var data = mergeData(dataFile1, dataFile2);
 
         // Сформировать результат
         StringBuilder result = new StringBuilder("{\n");
@@ -101,29 +71,7 @@ public class Differ  {
         var firstFileDataYaml = Parsers.parserYaml(firstNormalizedFilePath);
         var secondFileDataYaml = Parsers.parserYaml(secondNormalizedFilePath);
 
-        // Сравнить данные
-        Map<String, List<String>> data = new HashMap<>();
-
-        // Получить данные из обекта1
-        for (var key : firstFileDataYaml.keySet()) {
-            if (!data.containsKey(key)) {
-                List<String> dataValue = new ArrayList<>();
-                data.put(key, dataValue);
-            }
-            var value = data.get(key);
-            value.add(firstFileDataYaml.get(key).toString());
-        }
-
-        // Получить данные из обекта2
-        for (var key : secondFileDataYaml.keySet()) {
-            if (!data.containsKey(key)) {
-                List<String> dataValue = new ArrayList<>();
-                data.put(key, dataValue);
-            }
-            var value = data.get(key);
-            value.add(secondFileDataYaml.get(key).toString());
-        }
-
+        var data = mergeData(firstFileDataYaml, secondFileDataYaml);
 
         // Сформировать результат
         StringBuilder result = new StringBuilder("{\n");
@@ -149,5 +97,32 @@ public class Differ  {
 
         result.append("}");
         return result.toString();
+    }
+
+
+    private static Map<String, List<String>> mergeData(Map<String, Object> dataFile1, Map<String, Object> dataFile2) {
+        Map<String, List<String>> result = new HashMap<>();
+
+        // Получить данные из обекта1
+        for (var key : dataFile1.keySet()) {
+            if (!result.containsKey(key)) {
+                List<String> dataValue = new ArrayList<>();
+                result.put(key, dataValue);
+            }
+            var value = result.get(key);
+            value.add(dataFile1.get(key).toString());
+        }
+
+        // Получить данные из обекта2
+        for (var key : dataFile2.keySet()) {
+            if (!result.containsKey(key)) {
+                List<String> dataValue = new ArrayList<>();
+                result.put(key, dataValue);
+            }
+            var value = result.get(key);
+            value.add(dataFile2.get(key).toString());
+        }
+
+        return result;
     }
 }
