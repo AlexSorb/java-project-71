@@ -1,8 +1,5 @@
 package hexlet.code.source;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,15 +9,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+
+
 public class Differ  {
-
-    public static Map<String, Object> readJson(Path path) throws IOException {
-        Map<String, Object> result;
-        ObjectMapper om = new ObjectMapper();
-        result = om.readValue(path.toFile(), Map.class);
-        return result;
-    }
-
 
     public static String generate(Path filePath1, Path filePath2) throws FileNotFoundException {
 
@@ -38,8 +29,8 @@ public class Differ  {
         Map<String, Object> dataFile2;
 
         try {
-            dataFile1 = readJson(normalizedPath1);
-            dataFile2 = readJson(normalizedPath2);
+            dataFile1 = Parsers.parserJson(normalizedPath1);
+            dataFile2 = Parsers.parserJson(normalizedPath2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -95,14 +86,7 @@ public class Differ  {
         result.append("}");
         return result.toString();
     }
-    // Чтение Yaml из файла
-    public static Map<String, Object> readYaml(Path file) throws IOException {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        Map<String, Object> dataYaml = new HashMap<>();
-        dataYaml = mapper.readValue(file.toFile(), Map.class);
-        System.out.println(dataYaml);
-        return dataYaml;
-    }
+
     public static String generateYaml(Path firstFilePath, Path secondFilePath2) throws IOException {
 
         // Преобразование относительного пути в абсолютный
@@ -114,8 +98,8 @@ public class Differ  {
             throw new FileNotFoundException("Файл для чтения не найден");
         }
 
-        var firstFileDataYaml = readYaml(firstNormalizedFilePath);
-        var secondFileDataYaml = readYaml(secondNormalizedFilePath);
+        var firstFileDataYaml = Parsers.parserYaml(firstNormalizedFilePath);
+        var secondFileDataYaml = Parsers.parserYaml(secondNormalizedFilePath);
 
         // Сравнить данные
         Map<String, List<String>> data = new HashMap<>();
