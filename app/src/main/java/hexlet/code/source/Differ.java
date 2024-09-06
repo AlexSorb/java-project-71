@@ -102,7 +102,7 @@ public class Differ  {
         }
 
         var firstFileDataYaml = Parsers.parserYaml(firstNormalizedFilePath);
-        var secondFileDataYaml = Parsers.parserYaml((secondNormalizedFilePath);
+        var secondFileDataYaml = Parsers.parserYaml(secondNormalizedFilePath);
 
         // Сравнить данные
         Map<String, List<String>> data = new HashMap<>();

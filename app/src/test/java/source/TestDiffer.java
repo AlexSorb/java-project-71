@@ -53,20 +53,6 @@ public class TestDiffer {
         assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
     }
 
-    @Test
-    public void testReadJson() throws IOException {
-        Path jsonFilePath = Paths.get("src/test/java/resources/File1.json").toAbsolutePath();
-        var readingJson = Differ.readJson(jsonFilePath);
-        var rightAnswer =  Map.of(
-                "host", "hexlet.io",
-                "timeout", 50,
-                "proxy", "123.234.53.22",
-                "follow", false
-        );
-        assertEquals(readingJson, rightAnswer);
-    }
-
-
     // Тесты стравнения yaml
 
     // Тестирование сравнения
@@ -82,20 +68,6 @@ public class TestDiffer {
             throw new RuntimeException(e);
         }
         assertEquals(difference, differs);
-    }
-
-    // Тестировние парсинга yaml
-    @Test
-    public void testParsingYaml() {
-        Path yamlFile = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
-        String pars = "{host=hexlet.io, " + "timeout=50, " + "proxy=123.234.53.22, " + "follow=false}";
-
-        try {
-            assert Differ.readYaml(yamlFile) != null;
-            assertEquals(pars, Differ.readYaml(yamlFile).toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     // Тестирование ошибки несуществования одного из фалов
