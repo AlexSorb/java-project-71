@@ -30,10 +30,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.0-rc1")
 
-
-
-
-
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
