@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-import hexlet.code.source.Differ;
+import hexlet.code.source.JsonDiffer;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.1",
     description = "Compares two configuration files and shows a difference.")
@@ -41,7 +41,7 @@ public class App implements Callable<Integer> {
         if (filepath1 != null && filepath2 != null) {
             String comparison = "";
             try {
-                comparison = Differ.generate(Path.of(filepath1), Path.of(filepath2));
+                comparison = JsonDiffer.generate(Path.of(filepath1), Path.of(filepath2));
             } catch (IOException e) {
                 System.out.println("Ошибка чтения");
                 e.printStackTrace();

@@ -1,6 +1,6 @@
 package source;
 
-import hexlet.code.source.Differ;
+import hexlet.code.source.JsonDiffer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,9 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
-public class TestDiffer {
+public class TestJsonDiffer {
 
     String differs = "{\n"
             + "- follow: false\n"
@@ -27,7 +26,7 @@ public class TestDiffer {
         Path file2 = Path.of("src/test/java/resources/File2.json").toAbsolutePath();
         String result = "";
         try {
-            result = Differ.generate(file1, file2);
+            result = JsonDiffer.generate(file1, file2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -42,12 +41,12 @@ public class TestDiffer {
 
 
         var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generate(wrongFile, file1);
+            JsonDiffer.generate(wrongFile, file1);
         });
         assertEquals("Файл для чтения не найден", thrownFirstArg.getMessage());
 
         var thrownSecondArg = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generate(file1, wrongFile);
+            JsonDiffer.generate(file1, wrongFile);
         });
         assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
     }
@@ -55,34 +54,7 @@ public class TestDiffer {
     // Тесты стравнения yaml
 
     // Тестирование сравнения
-    @Test
-    public void testGenerateYaml() {
-        Path yamlFile1 = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
-        Path yamlFile2 = Paths.get("src/test/java/resources/TestYamlFile2.yaml").toAbsolutePath();
-
-        String difference = null;
-        try {
-            difference = Differ.generateYaml(yamlFile1, yamlFile2);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(difference, differs);
-    }
 
     // Тестирование ошибки несуществования одного из фалов
-    @Test
-    public void testNotExistFile() {
-        Path existFilePath = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
-        Path notExistFilePath = Paths.get("src/test/resources/WrongYamlFile.yaml").toAbsolutePath();
 
-        var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generateYaml(notExistFilePath, existFilePath);
-        });
-        assertEquals("Файл для чтения не найден", thrownFirstArg.getMessage());
-
-        var thrownSecondArg = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generateYaml(existFilePath, notExistFilePath);
-        });
-        assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
-    }
 }

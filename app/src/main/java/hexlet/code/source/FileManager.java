@@ -7,6 +7,10 @@ public class FileManager {
 
     public static Path normaolizePath(Path noNormPath) {
 
+        if (noNormPath == null) {
+            throw new IllegalArgumentException("The file path cannot be empty!");
+        }
+
         var absolutPath = noNormPath.toAbsolutePath();
         var normalizedPath = absolutPath.normalize();
 
