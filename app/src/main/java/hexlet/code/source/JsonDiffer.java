@@ -57,49 +57,6 @@ public class JsonDiffer implements Differ {
         return result.toString();
     }
 
-    public static String generateYaml(Path firstFilePath, Path secondFilePath2) throws IOException {
-
-        // Преобразование относительного пути в абсолютный
-        var firstNormalizedFilePath = FileManager.normaolizePath(firstFilePath);
-        var secondNormalizedFilePath = FileManager.normaolizePath(secondFilePath2);
-
-        // Проверка на существование файлов для чтения
-        if (Files.notExists(firstNormalizedFilePath) || Files.notExists(secondNormalizedFilePath)) {
-            throw new FileNotFoundException("Файл для чтения не найден");
-        }
-
-        var firstFileDataYaml = Parsers.parserYaml(firstNormalizedFilePath);
-        var secondFileDataYaml = Parsers.parserYaml(secondNormalizedFilePath);
-
-        var data = mergeData(firstFileDataYaml, secondFileDataYaml);
-
-        // Сформировать результат
-        StringBuilder result = new StringBuilder("{\n");
-
-        var sortedKeySet = data.keySet().stream().sorted().toList(); // Сортировка набора ключей
-        for (var key : sortedKeySet) {
-            var value = data.get(key);
-
-            String add = "";
-            if (value.size() < 2) {
-                add = key + ": " + value.get(0).toString();
-                add = secondFileDataYaml.containsKey(key) ? "+ " + add : "- " + add;
-            } else {
-                String firstValue = value.get(0).toString();
-                String lastValue = value.get(1).toString();
-                add = firstValue.equals(lastValue) ? "  " + key + ": " + firstValue
-                        : "- " + key + ": " + firstValue + "\n" + "+ " + key + ": " + lastValue;
-            }
-
-            result.append(add)
-                    .append("\n");
-        }
-
-        result.append("}");
-        return result.toString();
-    }
-
-
     private static Map<String, List<String>> mergeData(Map<String, Object> dataFile1, Map<String, Object> dataFile2) {
         Map<String, List<String>> result = new HashMap<>();
 
