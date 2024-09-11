@@ -1,5 +1,8 @@
 package hexlet.code;
 
+import hexlet.code.source.Differ;
+import hexlet.code.source.FileManager;
+import hexlet.code.source.YamlDiffer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -40,8 +43,15 @@ public class App implements Callable<Integer> {
     public Integer call() {
         if (filepath1 != null && filepath2 != null) {
             String comparison = "";
+            Differ differ;
+            if (FileManager.isJsonFile(Path.of(filepath1)) && FileManager.isJsonFile(Path.of(filepath2))) {
+                differ = new JsonDiffer();
+            } else {
+                differ = new YamlDiffer();
+            }
+
             try {
-                comparison = JsonDiffer.generate(Path.of(filepath1), Path.of(filepath2));
+                comparison = differ.generate(Path.of(filepath1), Path.of(filepath2));
             } catch (IOException e) {
                 System.out.println("Ошибка чтения");
                 e.printStackTrace();

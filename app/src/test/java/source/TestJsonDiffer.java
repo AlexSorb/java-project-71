@@ -1,6 +1,8 @@
 package source;
 
+import hexlet.code.source.Differ;
 import hexlet.code.source.JsonDiffer;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,13 +22,22 @@ public class TestJsonDiffer {
             + "+ verbose: true\n"
             + "}";
 
+
+    private static Differ differ;
+
+    @BeforeAll
+    public static void genDiffer() {
+        differ = new JsonDiffer();
+    }
+
+
     @Test
     public void testGenerate() {
         Path file1 = Path.of("src/test/java/resources/File1.json").toAbsolutePath();
         Path file2 = Path.of("src/test/java/resources/File2.json").toAbsolutePath();
         String result = "";
         try {
-            result = JsonDiffer.generate(file1, file2);
+            result = differ.generate(file1, file2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -41,20 +52,14 @@ public class TestJsonDiffer {
 
 
         var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {
-            JsonDiffer.generate(wrongFile, file1);
+            differ.generate(wrongFile, file1);
         });
         assertEquals("Файл для чтения не найден", thrownFirstArg.getMessage());
 
         var thrownSecondArg = assertThrows(FileNotFoundException.class, () -> {
-            JsonDiffer.generate(file1, wrongFile);
+            differ.generate(file1, wrongFile);
         });
         assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
     }
-
-    // Тесты стравнения yaml
-
-    // Тестирование сравнения
-
-    // Тестирование ошибки несуществования одного из фалов
 
 }

@@ -16,4 +16,10 @@ public class FileManager {
 
         return normalizedPath;
     }
+
+    public static boolean isJsonFile(Path filePath) {
+        var fileName = filePath.getFileName().toString();
+        var result = fileName.endsWith(".json");
+        return result;
+    }
 }

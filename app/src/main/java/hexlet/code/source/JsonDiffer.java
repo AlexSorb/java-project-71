@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 
 
-public class JsonDiffer {
+public class JsonDiffer implements Differ {
 
-    public static String generate(Path filePath1, Path filePath2) throws IOException {
+    public String generate(Path filePath1, Path filePath2) throws IOException {
 
 
         // Преобразование отнасительных путей в абсолютные
