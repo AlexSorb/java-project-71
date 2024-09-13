@@ -29,32 +29,13 @@ public class JsonDiffer implements Differ {
         var dataFile2 = Parsers.parserJson(normalizedPath2);
 
         // Сравнить данные
-        var data = mergeData(dataFile1, dataFile2);
+        var data = new Diff(dataFile1, dataFile2);
 
         // Сформировать результат
         StringBuilder result = new StringBuilder("{\n");
 
-        var sortedKeySet = data.keySet().stream().sorted().toList(); // Сортировка набора ключей
-        for (var key : sortedKeySet) {
-            var value = data.get(key);
-
-            String add = "";
-            if (value.size() < 2) {
-                add = key + ": " + value.get(0).toString();
-                add = dataFile2.containsKey(key) ? "+ " + add : "- " + add;
-            } else {
-                String firstValue = value.get(0).toString();
-                String lastValue = value.get(1).toString();
-                add = firstValue.equals(lastValue) ? "  " + key + ": " + firstValue
-                        : "- " + key + ": " + firstValue + "\n" + "+ " + key + ": " + lastValue;
-            }
-
-            result.append(add)
-                    .append("\n");
-        }
-
-        result.append("}");
-        return result.toString();
+        var jsonReport = generateJsonReport(data);
+        return jsonReport;
     }
 
     private static Map<String, List<String>> mergeData(Map<String, Object> dataFile1, Map<String, Object> dataFile2) {
@@ -81,5 +62,12 @@ public class JsonDiffer implements Differ {
         }
 
         return result;
+    }
+
+    public String generateJsonReport(Diff diff) {
+        StringBuilder result = new StringBuilder("{\n");
+        result.append(diff.toString());
+        result.append("}");
+        return result.toString();
     }
 }
