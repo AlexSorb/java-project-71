@@ -28,7 +28,7 @@ public class TestParsers {
 
     @Test
     public void testYamlParser() {
-        Path yamlFile = Paths.get("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
+        Path yamlFile = Paths.get("src/test/java/resources/TestYamlFile1.yml").toAbsolutePath();
         String pars = "{host=hexlet.io, " + "timeout=50, " + "proxy=123.234.53.22, " + "follow=false}";
 
         try {

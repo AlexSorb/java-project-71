@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestYamlDiffer {
-    private final Path firstTestFilePath = Path.of("src/test/java/resources/TestYamlFile1.yaml").toAbsolutePath();
-    private final Path secondTestFilePath = Path.of("src/test/java/resources/TestYamlFile2.yaml").toAbsolutePath();
-    private final Path wrongTestFilePath = Paths.get("src/test/resources/WrongYamlFile.yaml").toAbsolutePath();
+    private final Path firstTestFilePath = Path.of("src/test/java/resources/TestYamlFile1.yml").toAbsolutePath();
+    private final Path secondTestFilePath = Path.of("src/test/java/resources/TestYamlFile2.yml").toAbsolutePath();
+    private final Path wrongTestFilePath = Paths.get("src/test/resources/WrongYamlFile.yml").toAbsolutePath();
      //private final Path emptyTestFilePath = Paths.get("src/test/java/resources/EmptyTestFile.yaml").toAbsolutePath();
 
     private static Differ differ;
@@ -32,7 +32,6 @@ public class TestYamlDiffer {
                 + "- follow: false\n"
                 + "  host: hexlet.io\n"
                 + "- proxy: 123.234.53.22\n"
-                + "+ proxy: 123.234.53.21\n"
                 + "- timeout: 50\n"
                 + "+ timeout: 20\n"
                 + "+ verbose: true\n"

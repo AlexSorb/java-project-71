@@ -58,6 +58,6 @@ public class App implements Callable<Integer> {
             }
             System.out.println(comparison);
         }
-        return 1;
+        return 0;
     }
 }
