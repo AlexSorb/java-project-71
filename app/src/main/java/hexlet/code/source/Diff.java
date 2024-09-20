@@ -133,6 +133,17 @@ public class Diff {
     }
 
     public String NewtoSting() {
-        return "";
+        var result = new StringBuilder();
+        changeMap.forEach((key, value) ->{
+            String addStr = "";
+            if (value.equals(DEL) || value.equals(CHN)) {
+                addStr += DEL + " " + key + " " + firstData.get(key) + "\n";
+            }
+            if (value.equals(ADD) || value.equals(CHN)) {
+                addStr += ADD + " " + key+ " " + secondData.get(key) + "\n";
+            }
+            result.append(addStr);
+        });
+        return result.toString();
     }
 }
