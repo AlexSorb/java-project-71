@@ -2,10 +2,7 @@ package hexlet.code.source;
 
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 public class Diff {
@@ -20,12 +17,50 @@ public class Diff {
 
     private Map<String, List<Object>> change;
     private Map<String, String> differMap;
+    private Set<String> fullKeys;
+    private Set<String> deleteKeys;
+    private Set<String> addKeys;
+    private Set<String> changeKey;
+    private Set<String> unChangeKey;
+
+
+    Map<String, Object> firstData;
+    Map<String, Object> secondData;
+    Map<String, String> changeMap;
 
 
     public Diff(Map<String, Object> dataFile1, Map<String, Object> dataFile2) {
-        change = new HashMap<>();
-        differMap = new HashMap<>();
 
+        firstData = dataFile1;
+        secondData = dataFile2;
+        changeMap = new TreeMap<>();
+
+        change = new TreeMap<>();
+        differMap = new TreeMap<>();
+
+        fullKeys = new TreeSet<>();
+        fullKeys.addAll(dataFile1.keySet());
+        fullKeys.addAll(dataFile2.keySet());
+
+        deleteKeys = new TreeSet<>(fullKeys);
+        deleteKeys.removeAll(dataFile2.keySet());
+
+        addKeys = new TreeSet<>(fullKeys);
+        addKeys.removeAll(dataFile1.keySet());
+
+        changeKey = new TreeSet<>(fullKeys);
+        changeKey.removeAll(deleteKeys);
+        changeKey.removeAll(addKeys);
+
+        unChangeKey = new TreeSet<>(changeKey);
+        for (var key : unChangeKey) {
+            var data1 = dataFile1.get(key) == null ? "null" : dataFile1.get(key);;
+            var data2 = dataFile2.get(key) == null ? "null" : dataFile2.get(key);
+            if (data1.toString().equals(data2.toString())) {
+                changeKey.remove(key);
+            }
+        }
+        unChangeKey.removeAll(changeKey);
 
         // Получить данные из обекта1
         for (var key : dataFile1.keySet()) {
@@ -34,8 +69,8 @@ public class Diff {
                 change.put(key, dataValue);
             }
             var value = change.get(key);
-            value.add(dataFile1.get(key));
-            differMap.put(key, UNC);
+            var addVal = dataFile1.get(key) == null ? "null" : dataFile1.get(key);
+            value.add(addVal);
         }
 
         // Получить данные из обекта2
@@ -43,33 +78,61 @@ public class Diff {
             if (!change.containsKey(key)) {
                 List<Object> dataValue = new ArrayList<>();
                 change.put(key, dataValue);
-                differMap.put(key, ADD);
             }
             var value = change.get(key);
-            value.add(dataFile2.get(key));
-            if (differMap.containsKey(key)) {
-                differMap.put(key, CHN);
-            }
+            var addVal = dataFile2.get(key) == null ? "null" : dataFile2.get(key);
+            value.add(addVal);
         }
+
+
+        // New version
+        fullKeys = new HashSet<>();
+        fullKeys.addAll(dataFile1.keySet());
+        fullKeys.addAll(dataFile2.keySet());
+
+        deleteKeys = new TreeSet<>(fullKeys);
+        deleteKeys.removeAll(dataFile2.keySet());
+        deleteKeys.forEach(key ->{
+            changeMap.put(key, DEL);
+        });
+
+        addKeys = new TreeSet<>(fullKeys);
+        addKeys.removeAll(dataFile1.keySet());
+        addKeys.forEach(key ->{
+            changeMap.put(key, ADD);
+        });
+
+        changeKey = new TreeSet<>(fullKeys);
+        changeKey.removeAll(deleteKeys);
+        changeKey.removeAll(addKeys);
+        changeKey.forEach(key ->{
+            var firstFileValue = dataFile1.get(key);
+            var secondFileValue = dataFile2.get(key);
+            var state = firstFileValue.equals(secondFileValue) ? UNC : CHN;
+            changeMap.put(key, state);
+        });
     }
 
     public String toString() {
         StringBuilder result = new StringBuilder();
 
-        for (var key : change.keySet()) {
-            String addString = "";
-            if (differMap.get(key).equals(CHN)) {
-                int size = change.get(key).size();
-                for (int i = 0; i < size - 1; i++) {
-                    addString += BEF + " " + key+ ": " + change.get(key).get(i) + "\n";
-                }
-                addString += BEF + " " + key+ ": " + change.get(key).get(size - 1) + "\n";
+        for (var key : fullKeys) {
+            if (deleteKeys.contains(key)) {
+                result.append(DEL + " " + key + ": " + change.get(key).getFirst() + "\n");
+            } else if (addKeys.contains(key)) {
+                result.append(ADD + " " + key + ": " + change.get(key).getFirst() + "\n");
+            } else if (changeKey.contains(key)) {
+                result.append(BEF + " " + key + ": " + change.get(key).get(0) + "\n");
+                result.append(AFT + " " + key + ": " + change.get(key).get(1) + "\n");
             } else {
-                addString += differMap.get(key) + " "+ key+ ": " + change.get(key) + "\n";
+                result.append(UNC + " " + key + ": " + change.get(key).getFirst() + "\n");
             }
-            result.append(addString);
-        }
 
+        }
         return result.toString();
+    }
+
+    public String NewtoSting() {
+        return "";
     }
 }

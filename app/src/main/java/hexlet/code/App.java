@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 
 import hexlet.code.source.JsonDiffer;
 
-@Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.1",
+@Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.9",
     description = "Compares two configuration files and shows a difference.")
 public class App implements Callable<Integer> {
 

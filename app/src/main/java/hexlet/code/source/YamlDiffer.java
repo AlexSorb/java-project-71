@@ -25,52 +25,63 @@ public class YamlDiffer implements Differ {
         var firstFileDataYaml = Parsers.parserYaml(firstNormalizedFilePath);
         var secondFileDataYaml = Parsers.parserYaml(secondNormalizedFilePath);
 
-        Map<String, List<String>> fullData = new HashMap<>();
 
-        // Получить данные из обекта1
-        for (var key : firstFileDataYaml.keySet()) {
-            if (!fullData.containsKey(key)) {
-                List<String> dataValue = new ArrayList<>();
-                fullData.put(key, dataValue);
-            }
-            var value = fullData.get(key);
-            value.add(firstFileDataYaml.get(key).toString());
-        }
+        var data = new Diff(firstFileDataYaml, secondFileDataYaml);
+        var result = stylish(data);
 
-        // Получить данные из обекта2
-        for (var key : secondFileDataYaml.keySet()) {
-            if (!fullData.containsKey(key)) {
-                List<String> dataValue = new ArrayList<>();
-                fullData.put(key, dataValue);
-            }
-            var value = fullData.get(key);
-            value.add(secondFileDataYaml.get(key).toString());
-        }
+//        Map<String, List<String>> fullData = new HashMap<>();
+//
+//        // Получить данные из обекта1
+//        for (var key : firstFileDataYaml.keySet()) {
+//            if (!fullData.containsKey(key)) {
+//                List<String> dataValue = new ArrayList<>();
+//                fullData.put(key, dataValue);
+//            }
+//            var value = fullData.get(key);
+//            value.add(firstFileDataYaml.get(key).toString());
+//        }
+//
+//        // Получить данные из обекта2
+//        for (var key : secondFileDataYaml.keySet()) {
+//            if (!fullData.containsKey(key)) {
+//                List<String> dataValue = new ArrayList<>();
+//                fullData.put(key, dataValue);
+//            }
+//            var value = fullData.get(key);
+//            value.add(secondFileDataYaml.get(key).toString());
+//        }
+//
+//        // Сформировать результат
+//        StringBuilder result = new StringBuilder("{\n");
+//
+//        var sortedKeySet = fullData.keySet().stream().sorted().toList(); // Сортировка набора ключей
+//        for (var key : sortedKeySet) {
+//            var value = fullData.get(key);
+//
+//            String add = "";
+//            if (value.size() < 2) {
+//                add = key + ": " + value.get(0).toString();
+//                add = secondFileDataYaml.containsKey(key) ? "+ " + add : "- " + add;
+//            } else {
+//                String firstValue = value.get(0).toString();
+//                String lastValue = value.get(1).toString();
+//                add = firstValue.equals(lastValue) ? "  " + key + ": " + firstValue
+//                        : "- " + key + ": " + firstValue + "\n" + "+ " + key + ": " + lastValue;
+//            }
+//
+//            result.append(add)
+//                    .append("\n");
+//        }
+//
+//        result.append("}");
+        return result;
+    }
 
-        // Сформировать результат
+
+    public static String stylish(Diff diff) {
         StringBuilder result = new StringBuilder("{\n");
-
-        var sortedKeySet = fullData.keySet().stream().sorted().toList(); // Сортировка набора ключей
-        for (var key : sortedKeySet) {
-            var value = fullData.get(key);
-
-            String add = "";
-            if (value.size() < 2) {
-                add = key + ": " + value.get(0).toString();
-                add = secondFileDataYaml.containsKey(key) ? "+ " + add : "- " + add;
-            } else {
-                String firstValue = value.get(0).toString();
-                String lastValue = value.get(1).toString();
-                add = firstValue.equals(lastValue) ? "  " + key + ": " + firstValue
-                        : "- " + key + ": " + firstValue + "\n" + "+ " + key + ": " + lastValue;
-            }
-
-            result.append(add)
-                    .append("\n");
-        }
-
+        result.append(diff.toString());
         result.append("}");
         return result.toString();
     }
-
 }

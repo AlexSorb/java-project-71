@@ -4,11 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
-
 
 
 public class JsonDiffer implements Differ {
@@ -34,37 +29,12 @@ public class JsonDiffer implements Differ {
         // Сформировать результат
         StringBuilder result = new StringBuilder("{\n");
 
-        var jsonReport = generateJsonReport(data);
+        var jsonReport = stylish(data);
         return jsonReport;
     }
 
-    private static Map<String, List<String>> mergeData(Map<String, Object> dataFile1, Map<String, Object> dataFile2) {
-        Map<String, List<String>> result = new HashMap<>();
 
-        // Получить данные из обекта1
-        for (var key : dataFile1.keySet()) {
-            if (!result.containsKey(key)) {
-                List<String> dataValue = new ArrayList<>();
-                result.put(key, dataValue);
-            }
-            var value = result.get(key);
-            value.add(dataFile1.get(key).toString());
-        }
-
-        // Получить данные из обекта2
-        for (var key : dataFile2.keySet()) {
-            if (!result.containsKey(key)) {
-                List<String> dataValue = new ArrayList<>();
-                result.put(key, dataValue);
-            }
-            var value = result.get(key);
-            value.add(dataFile2.get(key).toString());
-        }
-
-        return result;
-    }
-
-    public String generateJsonReport(Diff diff) {
+    public static String stylish(Diff diff) {
         StringBuilder result = new StringBuilder("{\n");
         result.append(diff.toString());
         result.append("}");

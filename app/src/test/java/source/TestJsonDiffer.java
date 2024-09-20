@@ -14,7 +14,7 @@ import java.nio.file.Path;
 public class TestJsonDiffer {
 
     String differs = "{\n"
-            + " chars1: [a, b, c]\n"
+            + "  chars1: [a, b, c]\n"
             + "- chars2: [d, e, f]\n"
             + "+ chars2: false\n"
             + "- checked: false\n"
@@ -25,7 +25,7 @@ public class TestJsonDiffer {
             + "+ id: null\n"
             + "- key1: value1\n"
             + "+ key2: value2\n"
-            + "numbers1: [1, 2, 3, 4]\n"
+            + "  numbers1: [1, 2, 3, 4]\n"
             + "- numbers2: [2, 3, 4, 5]\n"
             + "+ numbers2: [22, 33, 44, 55]\n"
             + "- numbers3: [3, 4, 5]\n"
@@ -58,8 +58,7 @@ public class TestJsonDiffer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(result);
-        assertEquals(result, differs);
+        assertEquals(differs, result);
     }
 
     @Test
