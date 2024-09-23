@@ -1,15 +1,12 @@
 package source;
 
 import hexlet.code.source.Differ;
-import hexlet.code.source.JsonDiffer;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class TestJsonDiffer {
 
@@ -40,21 +37,14 @@ public class TestJsonDiffer {
             + "}";
 
 
-    private static Differ differ;
-
-    @BeforeAll
-    public static void genDiffer() {
-        differ = new JsonDiffer();
-    }
-
 
     @Test
     public void testGenerate() {
-        Path file1 = Path.of("src/test/java/resources/File1.json").toAbsolutePath();
-        Path file2 = Path.of("src/test/java/resources/File2.json").toAbsolutePath();
+        var file1 = "src/test/java/resources/File1.json";
+        var file2 = "src/test/java/resources/File2.json";
         String result = "";
         try {
-            result = differ.generate(file1, file2);
+            result = Differ.generate(file1, file2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -63,17 +53,17 @@ public class TestJsonDiffer {
 
     @Test
     public void testWrongPathFile() {
-        Path file1 = Path.of("src/test/java/resources/File1.json").toAbsolutePath();
-        Path wrongFile = Path.of("src/test/java/wrongFIle.json").toAbsolutePath();
+        var file1 = "src/test/java/resources/File1.json";
+        var wrongFile = "src/test/java/wrongFIle.json";
 
 
         var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {
-            differ.generate(wrongFile, file1);
+            Differ.generate(wrongFile, file1);
         });
         assertEquals("Файл для чтения не найден", thrownFirstArg.getMessage());
 
         var thrownSecondArg = assertThrows(FileNotFoundException.class, () -> {
-            differ.generate(file1, wrongFile);
+            Differ.generate(file1, wrongFile);
         });
         assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
     }

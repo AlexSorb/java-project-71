@@ -1,18 +1,14 @@
 package hexlet.code;
 
 import hexlet.code.source.Differ;
-import hexlet.code.source.FileManager;
-import hexlet.code.source.YamlDiffer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Option;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-import hexlet.code.source.JsonDiffer;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.9",
     description = "Compares two configuration files and shows a difference.")
@@ -43,15 +39,8 @@ public class App implements Callable<Integer> {
     public Integer call() {
         if (filepath1 != null && filepath2 != null) {
             String comparison = "";
-            Differ differ;
-            if (FileManager.isJsonFile(Path.of(filepath1)) && FileManager.isJsonFile(Path.of(filepath2))) {
-                differ = new JsonDiffer();
-            } else {
-                differ = new YamlDiffer();
-            }
-
             try {
-                comparison = differ.generate(Path.of(filepath1), Path.of(filepath2));
+                comparison = Differ.generate(filepath1, filepath2);
             } catch (IOException e) {
                 System.out.println("Ошибка чтения");
                 e.printStackTrace();

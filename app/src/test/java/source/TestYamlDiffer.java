@@ -1,29 +1,20 @@
 package source;
 
 import hexlet.code.source.Differ;
-import hexlet.code.source.YamlDiffer;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestYamlDiffer {
-    private final Path firstTestFilePath = Path.of("src/test/java/resources/TestYamlFile1.yml").toAbsolutePath();
-    private final Path secondTestFilePath = Path.of("src/test/java/resources/TestYamlFile2.yml").toAbsolutePath();
-    private final Path wrongTestFilePath = Paths.get("src/test/resources/WrongYamlFile.yml").toAbsolutePath();
-
-    private static Differ differ;
-
-    @BeforeAll
-    public static void genDiffer() {
-        differ = new YamlDiffer();
-    }
+    private final String firstTestFilePath = "src/test/java/resources/TestYamlFile1.yml";
+    private final String secondTestFilePath = "src/test/java/resources/TestYamlFile2.yml";
+    private final String wrongTestFilePath = "src/test/resources/WrongYamlFile.yml";
 
     @Test
     public void testGenerate() throws IOException {
@@ -53,7 +44,7 @@ public class TestYamlDiffer {
                 + "+ setting3: none\n"
                 + "}";
 
-        String difference = differ.generate(firstTestFilePath, secondTestFilePath);
+        String difference = Differ.generate(firstTestFilePath, secondTestFilePath);
         assertEquals(difference, differs);
     }
 
@@ -61,12 +52,12 @@ public class TestYamlDiffer {
     public void testNotExistFile() {
 
         var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {
-            differ.generate(wrongTestFilePath, secondTestFilePath);
+            Differ.generate(wrongTestFilePath, secondTestFilePath);
         });
         assertEquals("Файл для чтения не найден", thrownFirstArg.getMessage());
 
         var thrownSecondArg = assertThrows(FileNotFoundException.class, () -> {
-            differ.generate(firstTestFilePath, wrongTestFilePath);
+            Differ.generate(firstTestFilePath, wrongTestFilePath);
         });
         assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
     }
@@ -75,12 +66,12 @@ public class TestYamlDiffer {
     @Test
     public void testNull() {
         var thrownFirstArg = assertThrows(IllegalArgumentException.class, () -> {
-            differ.generate(null, secondTestFilePath);
+            Differ.generate(null, secondTestFilePath);
         });
         assertEquals("The file path cannot be empty!", thrownFirstArg.getMessage());
 
         var thrownSecondArg = assertThrows(IllegalArgumentException.class, () -> {
-            differ.generate(firstTestFilePath, null);
+            Differ.generate(firstTestFilePath, null);
         });
         assertEquals("The file path cannot be empty!", thrownSecondArg.getMessage());
 
@@ -104,7 +95,7 @@ public class TestYamlDiffer {
                 + "  setting3: true\n"
                 + "}";
 
-        String difference = differ.generate(firstTestFilePath, firstTestFilePath);
+        String difference = Differ.generate(firstTestFilePath, firstTestFilePath);
         assertEquals(difference, differs);
     }
 }
