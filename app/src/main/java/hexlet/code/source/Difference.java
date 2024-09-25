@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Difference {
+    private String key;
     private Object oldValue;
     private Object newValue;
     private String state;

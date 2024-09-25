@@ -5,7 +5,7 @@ import java.nio.file.Path;
 // Класс описывает работу с дерикотриями и прочтением данных из файла
 public class FileManager {
 
-    public static Path normaolizePath(Path noNormPath) {
+    public static Path normaolizePath(Path noNormPath) throws IllegalArgumentException {
 
         if (noNormPath == null) {
             throw new IllegalArgumentException("The file path cannot be empty!");

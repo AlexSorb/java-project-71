@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -37,60 +39,54 @@ public class Differ {
         var dataFile1 = parser.parsFile(normalizedPath1);
         var dataFile2 = parser.parsFile(normalizedPath2);
 
-        Map<String, Difference> result = new TreeMap<>();
+        Map<String, Difference> differenceTreeMap = new TreeMap<>();
 
         dataFile1.forEach((key, value) -> {
-            var differ = new Difference();
+            var currentDifference = new Difference();
+            currentDifference.setKey(key);
             var addValue = value == null ? "null" : value;
-            differ.setOldValue(addValue);
-            result.put(key, differ);
+            currentDifference.setOldValue(addValue);
+            currentDifference.setState(DEL);
+            differenceTreeMap.put(key, currentDifference);
         });
 
         dataFile2.forEach((key, value) -> {
-            var differ = result.getOrDefault(key, new Difference());
+            var currentDifference = differenceTreeMap.getOrDefault(key, new Difference());
             var addValue = value == null ? "null" : value;
-            differ.setNewValue(addValue);
-            result.put(key, differ);
+            currentDifference.setKey(key);
+            currentDifference.setNewValue(addValue);
+
+            var addStage = ADD;
+            if (currentDifference.getOldValue() != null && currentDifference.getNewValue() != null) {
+                addStage = (currentDifference.getOldValue().equals(currentDifference.getNewValue())) ?
+                        UNC : CHN;
+            }
+            currentDifference.setState(addStage);
+            differenceTreeMap.put(key, currentDifference);
         });
-
-        result.values().forEach(value -> {
-            var oldValue = value.getOldValue();
-            var newValue = value.getNewValue();
-
-            if (newValue == "null") {
-                value.setState(DEL);
-            }
-            if (oldValue == "null") {
-                value.setState(ADD);
-            }
-
-            if (oldValue != null && newValue != null && oldValue.equals(newValue)) {
-                value.setState(UNC);
-            } else {
-                value.setState(CHN);
-            }
-        });
-
-        var jsonReport = stylish(result);
+        var listDifference = new ArrayList<>(differenceTreeMap.values());
+        var jsonReport = stylish(listDifference);
         return jsonReport;
     }
 
-
-    public static String stylish(Map<String, Difference> diff) {
+    public static String stylish(List<Difference> differences) {
         StringBuilder result = new StringBuilder("{\n");
+        differences.forEach(value -> {
+            var currentState = value.getState();
+            String addString = "";
 
-        diff.forEach((key, value) -> {
-            String addStr = "";
-            if (value.getState().equals(DEL) || value.getState().equals(CHN)) {
-                addStr += DEL + " " + key + ": " + value.getOldValue() + "\n";
+            if (currentState.equals(DEL) || currentState.equals(CHN)) {
+                addString += DEL + " " + value.getKey() + ": " + value.getOldValue() + "\n";
             }
-            if (value.getState().equals(ADD) || value.getState().equals(CHN)) {
-                addStr += ADD + " " + key + ": " + value.getNewValue() + "\n";
+
+            if (currentState.equals(ADD) || currentState.equals(CHN)) {
+                addString += ADD + " " + value.getKey() + ": " + value.getNewValue() + "\n";
             }
-            if (value.getState().equals(UNC)) {
-                addStr += UNC + " " + key + ": " + value.getOldValue() + "\n";
+
+            if (currentState.equals(UNC)) {
+                addString += UNC + " " + value.getKey() + ": " + value.getOldValue() + "\n";
             }
-            result.append(addStr);
+            result.append(addString);
         });
         result.append("}");
         return result.toString();

@@ -17,10 +17,10 @@ public class TestParsers {
     public void testJsonParser() throws IOException {
         Path jsonFilePath = Paths.get("src/test/java/resources/File1.json").toAbsolutePath();
         Parser readingJson = new ParserJson();
-        var data = readingJson.parsFile(jsonFilePath);
-        var rightAnswer = "{setting1=Some value, setting2=200, setting3=true, key1=value1, numbers1=[1, 2, 3, 4],"
-                + " numbers2=[2, 3, 4, 5], id=45, default=null, checked=false, numbers3=[3, 4, 5], chars1=[a, b, c],"
-                + " chars2=[d, e, f]}";
+        var data = readingJson.parsFile(jsonFilePath).toString();
+        var rightAnswer = "{setting1=Some value, setting2=200, setting3=true, key1=value1, numbers1=[1, 2, 3, 4], "
+                + "numbers2=[2, 3, 4, 5], id=45, default=null, checked=false, numbers3=[3, 4, 5], chars1=[a, b, c], "
+                + "chars2=[d, e, f]}";
         assertEquals(rightAnswer, data);
     }
 
@@ -32,7 +32,7 @@ public class TestParsers {
                 + "numbers2=[2, 3, 4, 5], id=45, default=null, checked=false, numbers3=[3, 4, 5], chars1=[a, b, c], "
                 + "chars2=[d, e, f]}";
         Parser readingJson = new ParserYAML();
-        var data = readingJson.parsFile(yamlFile);
+        var data = readingJson.parsFile(yamlFile).toString();
         assertEquals(pars, data);
 
     }
