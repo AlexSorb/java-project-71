@@ -58,8 +58,8 @@ public class Differ {
 
             var addStage = ADD;
             if (currentDifference.getOldValue() != null && currentDifference.getNewValue() != null) {
-                addStage = (currentDifference.getOldValue().equals(currentDifference.getNewValue())) ?
-                        UNC : CHN;
+                addStage = (currentDifference.getOldValue().equals(currentDifference.getNewValue()))
+                        ? UNC : CHN;
             }
             currentDifference.setState(addStage);
             differenceTreeMap.put(key, currentDifference);
