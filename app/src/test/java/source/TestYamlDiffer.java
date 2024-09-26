@@ -62,21 +62,6 @@ public class TestYamlDiffer {
         assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
     }
 
-//    // Тест на Null
-//    @Test
-//    public void testNull() {
-//        var thrownFirstArg = assertThrows(IllegalArgumentException.class, () -> {
-//            Differ.generate(null, secondTestFilePath);
-//        });
-//        assertEquals("The file path cannot be empty!", thrownFirstArg.getMessage());
-//
-//        var thrownSecondArg = assertThrows(IllegalArgumentException.class, () -> {
-//            Differ.generate(firstTestFilePath, null);
-//        });
-//        assertEquals("The file path cannot be empty!", thrownSecondArg.getMessage());
-//
-//    }
-
     // Тест на одинаковый файл
     @Test
     public void testGenerateWithSomeFile() throws IOException {
