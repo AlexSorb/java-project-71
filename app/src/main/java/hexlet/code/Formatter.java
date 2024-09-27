@@ -10,7 +10,8 @@ import java.util.List;
 
 public class Formatter {
 
-    public static String getOrder(String format, List<Difference> difference) throws IllegalArgumentException, JsonProcessingException {
+    public static String getOrder(String format, List<Difference> difference) throws IllegalArgumentException,
+            JsonProcessingException {
         var normalizeFormat = format.trim().toLowerCase();
         var result = "";
 
