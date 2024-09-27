@@ -1,5 +1,6 @@
 package hexlet.code.source;
 
+import hexlet.code.Formatter;
 import hexlet.code.source.parsers.Parser;
 import hexlet.code.source.parsers.ParserJson;
 import hexlet.code.source.parsers.ParserYAML;
@@ -9,30 +10,26 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 
 public class Differ {
 
-    private static final String ADD = "+";
-    private static final String DEL = "-";
-    private static final String UNC = " ";
-    private static final String CHN = "-+";
+    public static final String ADD = "+";
+    public static final String DEL = "-";
+    public static final String UNC = " ";
+    public static final String CHN = "-+";
 
-    public static String generate(String filePath1, String filePath2) throws IOException {
-
-
-        // Преобразование отнасительных путей в абсолютные
+    public static String generate(String filePath1, String filePath2, String format) throws IOException {
         var normalizedPath1 = FileManager.normaolizePath(Path.of(filePath1));
         var normalizedPath2 = FileManager.normaolizePath(Path.of(filePath2));
 
-        // Проверка на существование файлов для чтения
+
         if (Files.notExists(normalizedPath1) || Files.notExists(normalizedPath2)) {
             throw new FileNotFoundException("Файл для чтения не найден");
         }
-        // Выбрать парсер
+
         Parser parser = (FileManager.isJsonFile(normalizedPath1)) ? new ParserJson() : new ParserYAML();
 
 
@@ -64,31 +61,11 @@ public class Differ {
             currentDifference.setState(addStage);
             differenceTreeMap.put(key, currentDifference);
         });
+
+
         var listDifference = new ArrayList<>(differenceTreeMap.values());
-        var jsonReport = stylish(listDifference);
-        return jsonReport;
+        var reslut = Formatter.getOrder(format, listDifference);
+        return reslut;
     }
 
-    public static String stylish(List<Difference> differences) {
-        StringBuilder result = new StringBuilder("{\n");
-        differences.forEach(value -> {
-            var currentState = value.getState();
-            String addString = "";
-
-            if (currentState.equals(DEL) || currentState.equals(CHN)) {
-                addString += DEL + " " + value.getKey() + ": " + value.getOldValue() + "\n";
-            }
-
-            if (currentState.equals(ADD) || currentState.equals(CHN)) {
-                addString += ADD + " " + value.getKey() + ": " + value.getNewValue() + "\n";
-            }
-
-            if (currentState.equals(UNC)) {
-                addString += UNC + " " + value.getKey() + ": " + value.getOldValue() + "\n";
-            }
-            result.append(addString);
-        });
-        result.append("}");
-        return result.toString();
-    }
 }

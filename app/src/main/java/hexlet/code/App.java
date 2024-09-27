@@ -40,7 +40,7 @@ public class App implements Callable<Integer> {
         if (filepath1 != null && filepath2 != null) {
             String comparison = "";
             try {
-                comparison = Differ.generate(filepath1, filepath2);
+                comparison = Differ.generate(filepath1, filepath2, format);
             } catch (IOException e) {
                 System.out.println("Ошибка чтения");
                 e.printStackTrace();
