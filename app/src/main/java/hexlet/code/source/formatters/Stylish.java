@@ -13,15 +13,15 @@ public class Stylish {
             String addString = "";
 
             if (currentState.equals(Differ.DEL) || currentState.equals(Differ.CHN)) {
-                addString += Differ.DEL + " " + value.getKey() + ": " + value.getOldValue() + "\n";
+                addString += "- " + value.getKey() + ": " + value.getOldValue() + "\n";
             }
 
             if (currentState.equals(Differ.ADD) || currentState.equals(Differ.CHN)) {
-                addString += Differ.ADD + " " + value.getKey() + ": " + value.getNewValue() + "\n";
+                addString += "+ " + value.getKey() + ": " + value.getNewValue() + "\n";
             }
 
             if (currentState.equals(Differ.UNC)) {
-                addString += Differ.UNC + " " + value.getKey() + ": " + value.getOldValue() + "\n";
+                addString += "  " + value.getKey() + ": " + value.getOldValue() + "\n";
             }
             result.append(addString);
         });

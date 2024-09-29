@@ -16,13 +16,14 @@
 - Генерация отчета в виде plain text, stylish и json
 
 ## Ссылка на Asciinema
-Демонстрация работы парсинга и сравнения двух плоских файлов в формате JSON
-
+Демонстрация работы парсинга и сравнения двух плоских файлов в формате JSON:
 <https://asciinema.org/connect/ee0a0c75-af15-42bf-af15-7e8c4e69e7a1>
 
-
-Демонстрация работы парсинга и сравнения двух плоских файлов в формате YAML
+Демонстрация работы парсинга и сравнения двух плоских файлов в формате YAML: 
 <https://asciinema.org/connect/ee0a0c75-af15-42bf-af15-7e8c4e69e7a1>
 
-Демонстрация паркинга файлов с вложенной структурой
-https://asciinema.org/a/H8JGFVE7uLtMbvvlsZ38Xr0eE 
+Демонстрация паркинга файлов с вложенной структурой: <https://asciinema.org/a/H8JGFVE7uLtMbvvlsZ38Xr0eE>
+
+Демонстрация работы отчета Plain: <https://asciinema.org/a/JtBe4FAZSY1LOekad16gFqgH0>
+
+Демонстрация работы отчета Json: <https://asciinema.org/a/ePCyVcnPkuC1VAfR4MtB1LnB6>

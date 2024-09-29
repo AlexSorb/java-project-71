@@ -15,4 +15,12 @@ public class Difference {
     private Object newValue;
     private String state;
 
+    @Override
+    public String toString() {
+        return "Difference{"
+                + "key='" + key + '\''
+                + ", oldValue=" + oldValue
+                + ", newValue=" + newValue
+                + '}';
+    }
 }

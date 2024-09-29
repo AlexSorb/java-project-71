@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class TestJsonDiffer {
 
-    String differsJson = "{\n"
+    String differsStylish = "{\n"
             + "  chars1: [a, b, c]\n"
             + "- chars2: [d, e, f]\n"
             + "+ chars2: false\n"
@@ -50,6 +50,24 @@ public class TestJsonDiffer {
             + "Property 'setting2' was updated. From 200 to 300\n"
             + "Property 'setting3' was updated. From true to 'none'";
 
+    String differsJson = "[{\"key\":\"chars1\",\"oldValue\":[\"a\",\"b\",\"c\"],\"newValue\":[\"a\",\"b\",\"c\"],"
+            + "\"state\":\"UNC\"},"
+            + "{\"key\":\"chars2\",\"oldValue\":[\"d\",\"e\",\"f\"],\"newValue\":false,\"state\":\"CHN\"},"
+            + "{\"key\":\"checked\",\"oldValue\":false,\"newValue\":true,\"state\":\"CHN\"},"
+            + "{\"key\":\"default\",\"oldValue\":\"null\",\"newValue\":[\"value1\",\"value2\"],\"state\":\"CHN\"},"
+            + "{\"key\":\"id\",\"oldValue\":45,\"newValue\":\"null\",\"state\":\"CHN\"},"
+            + "{\"key\":\"key1\",\"oldValue\":\"value1\",\"newValue\":null,\"state\":\"DEL\"},"
+            + "{\"key\":\"key2\",\"oldValue\":null,\"newValue\":\"value2\",\"state\":\"ADD\"},"
+            + "{\"key\":\"numbers1\",\"oldValue\":[1,2,3,4],\"newValue\":[1,2,3,4],\"state\":\"UNC\"},"
+            + "{\"key\":\"numbers2\",\"oldValue\":[2,3,4,5],\"newValue\":[22,33,44,55],\"state\":\"CHN\"},"
+            + "{\"key\":\"numbers3\",\"oldValue\":[3,4,5],\"newValue\":null,\"state\":\"DEL\"},"
+            + "{\"key\":\"numbers4\",\"oldValue\":null,\"newValue\":[4,5,6],\"state\":\"ADD\"},"
+            + "{\"key\":\"obj1\",\"oldValue\":null,\"newValue\":{\"nestedKey\":\"value\",\"isNested\":true},"
+            + "\"state\":\"ADD\"},"
+            + "{\"key\":\"setting1\",\"oldValue\":\"Some value\",\"newValue\":\"Another value\",\"state\":\"CHN\"},"
+            + "{\"key\":\"setting2\",\"oldValue\":200,\"newValue\":300,\"state\":\"CHN\"},"
+            + "{\"key\":\"setting3\",\"oldValue\":true,\"newValue\":\"none\",\"state\":\"CHN\"}]";
+
     @Test
     public void testGenerateStylish() {
         var file1 = "src/test/java/resources/File1.json";
@@ -61,7 +79,7 @@ public class TestJsonDiffer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(differsJson, result);
+        assertEquals(differsStylish, result);
     }
 
     @Test
@@ -76,6 +94,20 @@ public class TestJsonDiffer {
             throw new RuntimeException(e);
         }
         assertEquals(differsPlain, result, formant);
+    }
+
+    @Test
+    public void testGenerateJson() {
+        var file1 = "src/test/java/resources/File1.json";
+        var file2 = "src/test/java/resources/File2.json";
+        var formant = "json";
+        String result = "";
+        try {
+            result = Differ.generate(file1, file2, formant);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(differsJson, result, formant);
     }
 
     @Test

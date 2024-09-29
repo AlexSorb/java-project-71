@@ -10,6 +10,6 @@ public class Json {
     public static String json(List<Difference> data) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         var result = objectMapper.writeValueAsString(data);
-        return result;
+        return result.trim();
     }
 }

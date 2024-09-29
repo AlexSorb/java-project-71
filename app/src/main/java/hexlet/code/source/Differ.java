@@ -16,10 +16,10 @@ import java.util.TreeMap;
 
 public class Differ {
 
-    public static final String ADD = "+";
-    public static final String DEL = "-";
-    public static final String UNC = " ";
-    public static final String CHN = "-+";
+    public static final String ADD = "ADD";
+    public static final String DEL = "DEL";
+    public static final String UNC = "UNC";
+    public static final String CHN = "CHN";
 
     public static String generate(String filePath1, String filePath2, String format) throws IOException {
         var normalizedPath1 = FileManager.normaolizePath(Path.of(filePath1));
