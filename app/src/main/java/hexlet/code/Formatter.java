@@ -29,6 +29,6 @@ public class Formatter {
                 throw new IllegalArgumentException("Не найден формат");
         }
 
-        return result.toString();
+        return result;
     }
 }

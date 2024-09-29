@@ -10,7 +10,6 @@ import java.util.Map;
 public class ParserYAML implements Parser {
     public Map<String, Object> parsFile(Path file) throws IOException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        var yamlMap = mapper.readValue(file.toFile(), Map.class);
-        return yamlMap;
+        return mapper.readValue(file.toFile(), Map.class);
     }
 }

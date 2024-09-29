@@ -10,7 +10,6 @@ public class ParserJson implements Parser {
 
     public Map<String, Object> parsFile(Path path) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        var jsonMap = mapper.readValue(path.toFile(), Map.class);
-        return jsonMap;
+        return mapper.readValue(path.toFile(), Map.class);
     }
 }

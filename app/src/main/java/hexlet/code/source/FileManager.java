@@ -2,7 +2,6 @@ package hexlet.code.source;
 
 import java.nio.file.Path;
 
-// Класс описывает работу с дерикотриями и прочтением данных из файла
 public class FileManager {
 
     public static Path normaolizePath(Path noNormPath) throws IllegalArgumentException {
@@ -12,14 +11,12 @@ public class FileManager {
         }
 
         var absolutPath = noNormPath.toAbsolutePath();
-        var normalizedPath = absolutPath.normalize();
 
-        return normalizedPath;
+        return absolutPath.normalize();
     }
 
     public static boolean isJsonFile(Path filePath) {
         var fileName = filePath.getFileName().toString();
-        var result = fileName.endsWith(".json");
-        return result;
+        return fileName.endsWith(".json");
     }
 }

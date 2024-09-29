@@ -64,8 +64,7 @@ public class Differ {
 
 
         var listDifference = new ArrayList<>(differenceTreeMap.values());
-        var reslut = Formatter.getOrder(format, listDifference);
-        return reslut;
+        return Formatter.getOrder(format, listDifference);
     }
 
 }
