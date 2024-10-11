@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -38,13 +39,22 @@ public class Differ {
 
         Map<String, Difference> differenceTreeMap = new TreeMap<>();
 
+        Map<String, List<Object>> difference = new TreeMap<>();
+
         dataFile1.forEach((key, value) -> {
             var currentDifference = new Difference();
             currentDifference.setKey(key);
+
+
             var addValue = value == null ? "null" : value;
             currentDifference.setOldValue(addValue);
             currentDifference.setState(DEL);
             differenceTreeMap.put(key, currentDifference);
+
+            //====================================================
+            var listValues = difference.getOrDefault(key, new ArrayList<>());
+            listValues.add(DEL + " " + addValue);
+            difference.put(key, listValues);
         });
 
         dataFile2.forEach((key, value) -> {
@@ -60,6 +70,11 @@ public class Differ {
             }
             currentDifference.setState(addStage);
             differenceTreeMap.put(key, currentDifference);
+
+
+            //====================================================
+            var listValues = difference.getOrDefault(key, new ArrayList<>());
+
         });
 
 
