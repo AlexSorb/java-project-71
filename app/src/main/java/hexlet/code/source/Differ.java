@@ -1,9 +1,8 @@
 package hexlet.code.source;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import hexlet.code.Formatter;
-import hexlet.code.source.parsers.Parser;
-import hexlet.code.source.parsers.ParserJson;
-import hexlet.code.source.parsers.ParserYAML;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,9 +32,9 @@ public class Differ {
             throw new FileNotFoundException("Файл для чтения не найден");
         }
 
-        Parser parser = (FileManager.isJsonFile(normalizedPath1)) ? new ParserJson() : new ParserYAML();
-        var dataFirst = parser.parsFile(normalizedPath1);
-        var dataSecond = parser.parsFile(normalizedPath2);
+        ObjectMapper mapper = (FileManager.isJsonFile(normalizedPath1)) ? new ObjectMapper() : new YAMLMapper();
+        var dataFirst = mapper.readValue(normalizedPath1.toFile(), Map.class);
+        var dataSecond = mapper.readValue(normalizedPath2.toFile(), Map.class);
 
 
 
