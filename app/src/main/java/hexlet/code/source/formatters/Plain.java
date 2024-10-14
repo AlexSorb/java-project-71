@@ -1,39 +1,12 @@
 package hexlet.code.source.formatters;
 
 import hexlet.code.source.Differ;
-import hexlet.code.source.Difference;
 
 import java.util.List;
+import java.util.Map;
+
 
 public class Plain {
-    public static String plain(List<Difference> differences) {
-        StringBuilder result = new StringBuilder();
-        differences.forEach(value -> {
-            String addString = "";
-            var currentState = value.getState();
-
-            if (currentState.equals(Differ.ADD)) {
-                addString = "Property '" + value.getKey() + "' was ";
-                var newValue = getPrintString(value.getNewValue());
-                addString += "added with value: " + newValue + "\n";
-            }
-
-            if (currentState.equals(Differ.DEL)) {
-                addString = "Property '" + value.getKey() + "' was ";
-                addString += "removed" + "\n";
-            }
-
-            if (currentState.equals(Differ.CHN)) {
-                addString = "Property '" + value.getKey() + "' was ";
-                var newValue = getPrintString(value.getNewValue());
-                var oldValue = getPrintString(value.getOldValue());
-                addString += "updated. From " + oldValue + " to " + newValue + "\n";
-            }
-
-            result.append(addString);
-        });
-        return result.toString().trim();
-    }
 
     public static String getPrintString(Object value) {
 
@@ -51,5 +24,39 @@ public class Plain {
             result = "[complex value]";
         }
         return result;
+    }
+
+    public static String plain(Map<String, List<Object>> differenceMap) {
+        StringBuilder result = new StringBuilder();
+        differenceMap.forEach((key, value) -> {
+            String addString = "Property '" + key + "' was ";
+            if (value.size() != 3) {
+                throw new IllegalArgumentException("Неподходящие данные");
+            }
+
+            var currentState = value.getFirst();
+
+            if (currentState.equals(Differ.ADDED)) {
+                Object newValue = getPrintString(value.getLast());
+                addString += "added with value: " + newValue + "\n";
+            }
+
+            if (currentState.equals(Differ.DELETED)) {
+                addString += "removed" + "\n";
+            }
+
+            if (currentState.equals(Differ.CHANGED)) {
+                Object oldValue = getPrintString(value.get(1));
+                Object newValue = getPrintString(value.getLast());
+                addString += "updated. From " + oldValue + " to " + newValue + "\n";
+            }
+
+            if (currentState.equals(Differ.UNCHANGED)) {
+                addString = "";
+            }
+
+            result.append(addString);
+        });
+        return result.toString().trim();
     }
 }

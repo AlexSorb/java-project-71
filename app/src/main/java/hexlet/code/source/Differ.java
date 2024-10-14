@@ -9,18 +9,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.ArrayList;
 
 
 public class Differ {
 
-    public static final String ADD = "ADD";
-    public static final String DEL = "DEL";
-    public static final String UNC = "UNC";
-    public static final String CHN = "CHN";
+    public static final String ADDED = "ADDED";
+    public static final String DELETED = "DELETED";
+    public static final String CHANGED = "CHANGED";
+    public static final String UNCHANGED = "UNCHANGED";
 
     public static String generate(String filePath1, String filePath2, String format) throws IOException {
         var normalizedPath1 = FileManager.normaolizePath(Path.of(filePath1));
@@ -32,54 +34,37 @@ public class Differ {
         }
 
         Parser parser = (FileManager.isJsonFile(normalizedPath1)) ? new ParserJson() : new ParserYAML();
+        var dataFirst = parser.parsFile(normalizedPath1);
+        var dataSecond = parser.parsFile(normalizedPath2);
 
 
-        var dataFile1 = parser.parsFile(normalizedPath1);
-        var dataFile2 = parser.parsFile(normalizedPath2);
 
-        Map<String, Difference> differenceTreeMap = new TreeMap<>();
+        Map<String, List<Object>> differenceMap = new TreeMap<>();
+        Set<String> keySet = new TreeSet<>(dataFirst.keySet());
+        keySet.addAll(dataSecond.keySet());
 
-        Map<String, List<Object>> difference = new TreeMap<>();
+        keySet.forEach(key -> {
+            String stage = "";
+            var dataFirstValue = dataFirst.get(key) == null ? "null" : dataFirst.get(key);
+            var dataSecondValue = dataSecond.get(key) == null ? "null" : dataSecond.get(key);
 
-        dataFile1.forEach((key, value) -> {
-            var currentDifference = new Difference();
-            currentDifference.setKey(key);
+            if (dataFirst.containsKey(key) && dataSecond.containsKey(key)) {
 
+                stage = (dataFirstValue.equals(dataSecondValue)) ? UNCHANGED : CHANGED;
 
-            var addValue = value == null ? "null" : value;
-            currentDifference.setOldValue(addValue);
-            currentDifference.setState(DEL);
-            differenceTreeMap.put(key, currentDifference);
-
-            //====================================================
-            var listValues = difference.getOrDefault(key, new ArrayList<>());
-            listValues.add(DEL + " " + addValue);
-            difference.put(key, listValues);
-        });
-
-        dataFile2.forEach((key, value) -> {
-            var currentDifference = differenceTreeMap.getOrDefault(key, new Difference());
-            var addValue = value == null ? "null" : value;
-            currentDifference.setKey(key);
-            currentDifference.setNewValue(addValue);
-
-            var addStage = ADD;
-            if (currentDifference.getOldValue() != null && currentDifference.getNewValue() != null) {
-                addStage = (currentDifference.getOldValue().equals(currentDifference.getNewValue()))
-                        ? UNC : CHN;
+            } else {
+                stage = dataSecond.containsKey(key) ? ADDED : DELETED;
             }
-            currentDifference.setState(addStage);
-            differenceTreeMap.put(key, currentDifference);
 
+            List<Object> date = new ArrayList<>(3);
+            date.add(stage);
+            date.add(dataFirstValue);
+            date.add(dataSecondValue);
 
-            //====================================================
-            var listValues = difference.getOrDefault(key, new ArrayList<>());
-
+            differenceMap.put(key, date);
         });
 
-
-        var listDifference = new ArrayList<>(differenceTreeMap.values());
-        return Formatter.getOrder(format, listDifference);
+        return Formatter.getOrder(format, differenceMap);
     }
 
 }

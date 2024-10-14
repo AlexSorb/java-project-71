@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class TestJsonDiffer {
+public class TestDiffer {
 
     static final String STYLISH_REPORT_PATH = "src/test/java/fixtures/Stylish";
     static final String PLAIN_REPORT_PATH = "src/test/java/fixtures/Plain";
@@ -22,13 +22,12 @@ public class TestJsonDiffer {
     private static String differsPlain;
     private static String differsJson;
 
-    private final String file1 = "src/test/java/resources/File1.json";
-    private final String file2 = "src/test/java/resources/File2.json";
+    private final String firstTestJsonFilePath = "src/test/java/resources/File1.json";
+    private final String secondTestJsonFilePath = "src/test/java/resources/File2.json";
     private final String wrongFile = "src/test/java/wrongFIle.json";
 
-    private final String firstTestFilePath = "src/test/java/resources/TestYamlFile1.yml";
-    private final String secondTestFilePath = "src/test/java/resources/TestYamlFile2.yml";
-    private final String wrongTestFilePath = "src/test/resources/WrongYamlFile.yml";
+    private final String firstTestYamlFilePath = "src/test/java/resources/TestYamlFile1.yml";
+    private final String secondTestYamlFilePath = "src/test/java/resources/TestYamlFile2.yml";
 
     @BeforeAll
     public static void readFixtures() throws IOException {
@@ -43,30 +42,30 @@ public class TestJsonDiffer {
     public void testGenerateStylish() throws IOException {
         var format = "stylish";
 
-        var differenceJson = Differ.generate(file1, file2, format);
+        var differenceJson = Differ.generate(firstTestJsonFilePath, secondTestJsonFilePath, format);
         assertEquals(differsStylish, differenceJson);
 
-        String differenceYaml = Differ.generate(firstTestFilePath, secondTestFilePath, format);
+        String differenceYaml = Differ.generate(firstTestYamlFilePath, secondTestYamlFilePath, format);
         assertEquals(differenceYaml, differsStylish);
     }
 
     @Test
     public void testGeneratePlain() throws IOException {
         var format = "plain";
-        var differenceJson = Differ.generate(file1, file2, format);
+        var differenceJson = Differ.generate(firstTestJsonFilePath, secondTestJsonFilePath, format);
         assertEquals(differsPlain, differenceJson, format);
 
-        String differenceYaml = Differ.generate(firstTestFilePath, secondTestFilePath, format);
+        String differenceYaml = Differ.generate(firstTestYamlFilePath, secondTestYamlFilePath, format);
         assertEquals(differenceYaml, differsPlain);
     }
 
     @Test
     public void testGenerateJson() throws IOException {
         var format = "json";
-        var differenceJson = Differ.generate(file1, file2, format);
+        var differenceJson = Differ.generate(firstTestJsonFilePath, secondTestJsonFilePath, format);
         assertEquals(differsJson, differenceJson, format);
 
-        String difference = Differ.generate(firstTestFilePath, secondTestFilePath, format);
+        String difference = Differ.generate(firstTestYamlFilePath, secondTestYamlFilePath, format);
         assertEquals(difference, differsJson);
     }
 
@@ -74,12 +73,12 @@ public class TestJsonDiffer {
     public void testWrongPathFile() {
         var format = "stylish";
         var thrownFirstArg = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generate(wrongFile, file1, format);
+            Differ.generate(wrongFile, firstTestJsonFilePath, format);
         });
         assertEquals("Файл для чтения не найден", thrownFirstArg.getMessage());
 
         var thrownSecondArg = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generate(file1, wrongFile, format);
+            Differ.generate(firstTestJsonFilePath, wrongFile, format);
         });
         assertEquals("Файл для чтения не найден", thrownSecondArg.getMessage());
     }
@@ -88,11 +87,25 @@ public class TestJsonDiffer {
     public void testGenerateWithSomeFile() throws IOException {
         String differs = readReroptAsString(Path.of("src/test/java/fixtures/Stylish_same_file"));
         var formant = "stylish";
-        String differenceJson = Differ.generate(file1, file1, formant);
+        String differenceJson = Differ.generate(firstTestJsonFilePath, firstTestJsonFilePath, formant);
         assertEquals(differenceJson, differs);
 
-        String differenceYaml= Differ.generate(firstTestFilePath, firstTestFilePath, formant);
+        String differenceYaml = Differ.generate(firstTestYamlFilePath, firstTestYamlFilePath, formant);
         assertEquals(differenceYaml, differs);
+    }
+
+    @Test
+    public void testWrongFormat() {
+        var format = "wrong format";
+        var thrownFirstArg = assertThrows(IllegalArgumentException.class, () -> {
+            Differ.generate(firstTestJsonFilePath, secondTestJsonFilePath, format);
+        });
+        assertEquals("Не найден формат", thrownFirstArg.getMessage());
+
+        var thrownSecondArg = assertThrows(IllegalArgumentException.class, () -> {
+            Differ.generate(firstTestYamlFilePath, secondTestYamlFilePath, format);
+        });
+        assertEquals("Не найден формат", thrownSecondArg.getMessage());
     }
 
 
