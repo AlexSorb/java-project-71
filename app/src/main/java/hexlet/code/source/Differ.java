@@ -9,15 +9,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.ArrayList;
 
 
 public class Differ {
-
     public static final String ADDED = "ADDED";
     public static final String DELETED = "DELETED";
     public static final String CHANGED = "CHANGED";
@@ -65,5 +64,4 @@ public class Differ {
 
         return Formatter.getOrder(format, differenceMap);
     }
-
 }
