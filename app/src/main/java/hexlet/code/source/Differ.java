@@ -1,25 +1,27 @@
 package hexlet.code.source;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import hexlet.code.Formatter;
-import hexlet.code.source.parsers.Parser;
-import hexlet.code.source.parsers.ParserJson;
-import hexlet.code.source.parsers.ParserYAML;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.ArrayList;
 
 
 public class Differ {
 
-    public static final String ADD = "ADD";
-    public static final String DEL = "DEL";
-    public static final String UNC = "UNC";
-    public static final String CHN = "CHN";
+    public static final String ADDED = "ADDED";
+    public static final String DELETED = "DELETED";
+    public static final String CHANGED = "CHANGED";
+    public static final String UNCHANGED = "UNCHANGED";
 
     public static String generate(String filePath1, String filePath2, String format) throws IOException {
         var normalizedPath1 = FileManager.normaolizePath(Path.of(filePath1));
@@ -30,41 +32,38 @@ public class Differ {
             throw new FileNotFoundException("Файл для чтения не найден");
         }
 
-        Parser parser = (FileManager.isJsonFile(normalizedPath1)) ? new ParserJson() : new ParserYAML();
+        ObjectMapper mapper = (FileManager.isJsonFile(normalizedPath1)) ? new ObjectMapper() : new YAMLMapper();
+        var dataFirst = mapper.readValue(normalizedPath1.toFile(), Map.class);
+        var dataSecond = mapper.readValue(normalizedPath2.toFile(), Map.class);
 
 
-        var dataFile1 = parser.parsFile(normalizedPath1);
-        var dataFile2 = parser.parsFile(normalizedPath2);
 
-        Map<String, Difference> differenceTreeMap = new TreeMap<>();
+        Map<String, List<Object>> differenceMap = new TreeMap<>();
+        Set<String> keySet = new TreeSet<>(dataFirst.keySet());
+        keySet.addAll(dataSecond.keySet());
 
-        dataFile1.forEach((key, value) -> {
-            var currentDifference = new Difference();
-            currentDifference.setKey(key);
-            var addValue = value == null ? "null" : value;
-            currentDifference.setOldValue(addValue);
-            currentDifference.setState(DEL);
-            differenceTreeMap.put(key, currentDifference);
-        });
+        keySet.forEach(key -> {
+            String stage = "";
+            var dataFirstValue = dataFirst.get(key) == null ? "null" : dataFirst.get(key);
+            var dataSecondValue = dataSecond.get(key) == null ? "null" : dataSecond.get(key);
 
-        dataFile2.forEach((key, value) -> {
-            var currentDifference = differenceTreeMap.getOrDefault(key, new Difference());
-            var addValue = value == null ? "null" : value;
-            currentDifference.setKey(key);
-            currentDifference.setNewValue(addValue);
+            if (dataFirst.containsKey(key) && dataSecond.containsKey(key)) {
 
-            var addStage = ADD;
-            if (currentDifference.getOldValue() != null && currentDifference.getNewValue() != null) {
-                addStage = (currentDifference.getOldValue().equals(currentDifference.getNewValue()))
-                        ? UNC : CHN;
+                stage = (dataFirstValue.equals(dataSecondValue)) ? UNCHANGED : CHANGED;
+
+            } else {
+                stage = dataSecond.containsKey(key) ? ADDED : DELETED;
             }
-            currentDifference.setState(addStage);
-            differenceTreeMap.put(key, currentDifference);
+
+            List<Object> date = new ArrayList<>(3);
+            date.add(stage);
+            date.add(dataFirstValue);
+            date.add(dataSecondValue);
+
+            differenceMap.put(key, date);
         });
 
-
-        var listDifference = new ArrayList<>(differenceTreeMap.values());
-        return Formatter.getOrder(format, listDifference);
+        return Formatter.getOrder(format, differenceMap);
     }
 
 }
