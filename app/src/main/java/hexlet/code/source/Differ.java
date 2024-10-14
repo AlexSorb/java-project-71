@@ -42,7 +42,7 @@ public class Differ {
         keySet.addAll(dataSecond.keySet());
 
         keySet.forEach(key -> {
-            String stage = "";
+            String stage;
             var dataFirstValue = dataFirst.get(key) == null ? "null" : dataFirst.get(key);
             var dataSecondValue = dataSecond.get(key) == null ? "null" : dataSecond.get(key);
 

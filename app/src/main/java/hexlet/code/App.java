@@ -1,13 +1,14 @@
 package hexlet.code;
 
-import hexlet.code.source.Differ;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Option;
+import hexlet.code.source.Differ;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
+
 
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.9",
