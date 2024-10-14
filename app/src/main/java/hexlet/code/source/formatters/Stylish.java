@@ -11,10 +11,6 @@ public class Stylish {
         differenceMap.forEach((key, value) -> {
             String addedString = "";
 
-            if (value.size() != 3) {
-                throw new IllegalArgumentException("Неподходящие данные");
-            }
-
             if (value.getFirst().equals(Differ.DELETED) || value.getFirst().equals(Differ.CHANGED)) {
                 addedString += "- " + key + ": " + value.get(1) + "\n";
             }

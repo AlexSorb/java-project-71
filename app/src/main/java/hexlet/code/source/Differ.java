@@ -54,7 +54,7 @@ public class Differ {
                 stage = dataSecond.containsKey(key) ? ADDED : DELETED;
             }
 
-            List<Object> date = new ArrayList<>(3);
+            List<Object> date = new ArrayList<>();
             date.add(stage);
             date.add(dataFirstValue);
             date.add(dataSecondValue);
