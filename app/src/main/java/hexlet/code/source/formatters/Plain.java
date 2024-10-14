@@ -30,9 +30,6 @@ public class Plain {
         StringBuilder result = new StringBuilder();
         differenceMap.forEach((key, value) -> {
             String addString = "Property '" + key + "' was ";
-            if (value.size() != 3) {
-                throw new IllegalArgumentException("Неподходящие данные");
-            }
 
             var currentState = value.getFirst();
 
