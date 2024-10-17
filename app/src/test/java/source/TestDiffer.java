@@ -85,7 +85,7 @@ public class TestDiffer {
 
     @Test
     public void testGenerateWithSomeFile() throws IOException {
-        String differs = readReroptAsString(Path.of("src/test/java/fixtures/Stylish_same_file"));
+        String differs = readReroptAsString(Path.of("src/test/java/resources/fixtures/Stylish_same_file"));
         var formant = "stylish";
         String differenceJson = Differ.generate(firstTestJsonFilePath, firstTestJsonFilePath, formant);
         assertEquals(differenceJson, differs);

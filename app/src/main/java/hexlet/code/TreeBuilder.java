@@ -14,23 +14,23 @@ public class TreeBuilder {
     public static final String UNCHANGED = "UNCHANGED";
 
     public static Map<String, List<Object>> getTreeDifference(Map<String, Object> firstDataMap,
-                                                              Map<String, Object> SecondDataMap) {
+                                                              Map<String, Object> secondDataMap) {
 
         Map<String, List<Object>> result = new TreeMap<>();
         Set<String> keySet = new TreeSet<>(firstDataMap.keySet());
-        keySet.addAll(SecondDataMap.keySet());
+        keySet.addAll(secondDataMap.keySet());
 
         keySet.forEach(key -> {
             String stage;
             var dataFirstValue = firstDataMap.get(key) == null ? "null" : firstDataMap.get(key);
-            var dataSecondValue = SecondDataMap.get(key) == null ? "null" : SecondDataMap.get(key);
+            var dataSecondValue = secondDataMap.get(key) == null ? "null" : secondDataMap.get(key);
 
-            if (firstDataMap.containsKey(key) && SecondDataMap.containsKey(key)) {
+            if (firstDataMap.containsKey(key) && secondDataMap.containsKey(key)) {
 
                 stage = (dataFirstValue.equals(dataSecondValue)) ? UNCHANGED : CHANGED;
 
             } else {
-                stage = SecondDataMap.containsKey(key) ? ADDED : DELETED;
+                stage = secondDataMap.containsKey(key) ? ADDED : DELETED;
             }
 
             List<Object> date = new ArrayList<>();

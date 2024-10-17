@@ -1,6 +1,5 @@
 package hexlet.code.formatters;
 
-import hexlet.code.Differ;
 import hexlet.code.TreeBuilder;
 
 import java.util.List;

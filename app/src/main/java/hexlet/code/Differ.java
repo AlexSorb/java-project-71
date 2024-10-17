@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 public class Differ {
-    public final static String DEFAULT_FORMAT = "stylish";
+    public static final String DEFAULT_FORMAT = "stylish";
 
     public static String generate(String filePath1, String filePath2, String format) throws IOException {
         var normalizedPath1 = FileManager.normaolizePath(Path.of(filePath1));
