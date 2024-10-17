@@ -108,6 +108,15 @@ public class TestDiffer {
         assertEquals("Не найден формат", thrownSecondArg.getMessage());
     }
 
+    @Test
+    public void testGenerateWithOutFormat() throws IOException {
+        var differenceJson = Differ.generate(firstTestJsonFilePath, secondTestJsonFilePath);
+        assertEquals(differsStylish, differenceJson);
+
+        String differenceYaml = Differ.generate(firstTestYamlFilePath, secondTestYamlFilePath);
+        assertEquals(differenceYaml, differsStylish);
+    }
+
 
     public static String readReroptAsString(Path path) throws IOException {
         var normalizePath = path.normalize().toAbsolutePath();

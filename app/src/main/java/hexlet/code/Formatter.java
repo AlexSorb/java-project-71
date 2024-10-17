@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Formatter {
 
-    public static String getOrder(String format, Map<String, List<Object>> differenceMap)
+    public static String generateFormatString(String format, Map<String, List<Object>> differenceMap)
             throws IllegalArgumentException, JsonProcessingException {
         var normalizeFormat = format.trim().toLowerCase();
         var result = "";

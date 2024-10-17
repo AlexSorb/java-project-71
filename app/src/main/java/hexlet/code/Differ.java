@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 public class Differ {
-
+    public final static String DEFAULT_FORMAT = "stylish";
 
     public static String generate(String filePath1, String filePath2, String format) throws IOException {
         var normalizedPath1 = FileManager.normaolizePath(Path.of(filePath1));
@@ -28,6 +28,10 @@ public class Differ {
 
         var differenceMap = TreeBuilder.getTreeDifference(dataFirst, dataSecond);
 
-        return Formatter.getOrder(format, differenceMap);
+        return Formatter.generateFormatString(format, differenceMap);
+    }
+
+    public static String generate(String filePath1, String filePath2) throws IOException {
+        return Differ.generate(filePath1, filePath2, DEFAULT_FORMAT);
     }
 }
