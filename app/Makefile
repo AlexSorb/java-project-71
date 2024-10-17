@@ -19,7 +19,14 @@ run-dist: build install
 run-help: build install
 	./build/install/app/bin/app -h
 
-run-json: build install
+run-stylish: build install
 	./build/install/app/bin/app -f=stylish ./src/main/java/resources/json/FirstJsonFile.json ./src/main/java/resources/json/SecondJsonFile.json
+
+run-plain: build install
+	./build/install/app/bin/app -f=plain ./src/main/java/resources/json/FirstJsonFile.json ./src/main/java/resources/json/SecondJsonFile.json
+
+run-json: build install
+	./build/install/app/bin/app -f=json ./src/main/java/resources/json/FirstJsonFile.json ./src/main/java/resources/json/SecondJsonFile.json
+
 
 .PHONY: build

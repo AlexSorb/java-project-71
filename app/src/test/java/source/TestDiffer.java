@@ -1,6 +1,6 @@
 package source;
 
-import hexlet.code.source.Differ;
+import hexlet.code.Differ;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,9 +13,9 @@ import java.nio.file.Path;
 
 public class TestDiffer {
 
-    static final String STYLISH_REPORT_PATH = "src/test/java/fixtures/Stylish";
-    static final String PLAIN_REPORT_PATH = "src/test/java/fixtures/Plain";
-    static final String JSON_REPORT_PATH = "src/test/java/fixtures/Json";
+    static final String STYLISH_REPORT_PATH = "src/test/java/resources/fixtures/Stylish";
+    static final String PLAIN_REPORT_PATH = "src/test/java/resources/fixtures/Plain";
+    static final String JSON_REPORT_PATH = "src/test/java/resources/fixtures/Json";
 
 
     private static String differsStylish;
@@ -85,7 +85,7 @@ public class TestDiffer {
 
     @Test
     public void testGenerateWithSomeFile() throws IOException {
-        String differs = readReroptAsString(Path.of("src/test/java/fixtures/Stylish_same_file"));
+        String differs = readReroptAsString(Path.of("src/test/java/resources/fixtures/Stylish_same_file"));
         var formant = "stylish";
         String differenceJson = Differ.generate(firstTestJsonFilePath, firstTestJsonFilePath, formant);
         assertEquals(differenceJson, differs);
@@ -106,6 +106,15 @@ public class TestDiffer {
             Differ.generate(firstTestYamlFilePath, secondTestYamlFilePath, format);
         });
         assertEquals("Не найден формат", thrownSecondArg.getMessage());
+    }
+
+    @Test
+    public void testGenerateWithOutFormat() throws IOException {
+        var differenceJson = Differ.generate(firstTestJsonFilePath, secondTestJsonFilePath);
+        assertEquals(differsStylish, differenceJson);
+
+        String differenceYaml = Differ.generate(firstTestYamlFilePath, secondTestYamlFilePath);
+        assertEquals(differenceYaml, differsStylish);
     }
 
 

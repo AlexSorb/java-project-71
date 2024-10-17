@@ -1,6 +1,6 @@
-package hexlet.code.source.formatters;
+package hexlet.code.formatters;
 
-import hexlet.code.source.Differ;
+import hexlet.code.TreeBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -11,15 +11,15 @@ public class Stylish {
         differenceMap.forEach((key, value) -> {
             String addedString = "";
 
-            if (value.getFirst().equals(Differ.DELETED) || value.getFirst().equals(Differ.CHANGED)) {
+            if (value.getFirst().equals(TreeBuilder.DELETED) || value.getFirst().equals(TreeBuilder.CHANGED)) {
                 addedString += "- " + key + ": " + value.get(1) + "\n";
             }
 
-            if (value.getFirst().equals(Differ.ADDED) || value.getFirst().equals(Differ.CHANGED)) {
+            if (value.getFirst().equals(TreeBuilder.ADDED) || value.getFirst().equals(TreeBuilder.CHANGED)) {
                 addedString += "+ " + key + ": " + value.get(2) + "\n";
             }
 
-            if (value.getFirst().equals(Differ.UNCHANGED)) {
+            if (value.getFirst().equals(TreeBuilder.UNCHANGED)) {
                 addedString += "  " + key + ": "  + value.get(1) + "\n";
             }
 
