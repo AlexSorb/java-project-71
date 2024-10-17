@@ -12,15 +12,15 @@ public class Stylish {
             String addedString = "";
 
             if (value.getFirst().equals(TreeBuilder.DELETED) || value.getFirst().equals(TreeBuilder.CHANGED)) {
-                addedString += "- " + key + ": " + value.get(1) + "\n";
+                addedString += " - " + key + ": " + value.get(1) + "\n";
             }
 
             if (value.getFirst().equals(TreeBuilder.ADDED) || value.getFirst().equals(TreeBuilder.CHANGED)) {
-                addedString += "+ " + key + ": " + value.get(2) + "\n";
+                addedString += " + " + key + ": " + value.get(2) + "\n";
             }
 
             if (value.getFirst().equals(TreeBuilder.UNCHANGED)) {
-                addedString += "  " + key + ": "  + value.get(1) + "\n";
+                addedString += "   " + key + ": "  + value.get(1) + "\n";
             }
 
             result.append(addedString);
