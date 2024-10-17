@@ -1,6 +1,6 @@
 package source;
 
-import hexlet.code.source.Differ;
+import hexlet.code.Differ;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,9 +13,9 @@ import java.nio.file.Path;
 
 public class TestDiffer {
 
-    static final String STYLISH_REPORT_PATH = "src/test/java/fixtures/Stylish";
-    static final String PLAIN_REPORT_PATH = "src/test/java/fixtures/Plain";
-    static final String JSON_REPORT_PATH = "src/test/java/fixtures/Json";
+    static final String STYLISH_REPORT_PATH = "src/test/java/resources/fixtures/Stylish";
+    static final String PLAIN_REPORT_PATH = "src/test/java/resources/fixtures/Plain";
+    static final String JSON_REPORT_PATH = "src/test/java/resources/fixtures/Json";
 
 
     private static String differsStylish;

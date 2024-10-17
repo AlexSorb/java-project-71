@@ -1,4 +1,4 @@
-package hexlet.code.source.formatters;
+package hexlet.code.formatters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

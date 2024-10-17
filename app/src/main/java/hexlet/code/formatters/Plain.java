@@ -1,6 +1,7 @@
-package hexlet.code.source.formatters;
+package hexlet.code.formatters;
 
-import hexlet.code.source.Differ;
+import hexlet.code.Differ;
+import hexlet.code.TreeBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -33,22 +34,22 @@ public class Plain {
 
             var currentState = value.getFirst();
 
-            if (currentState.equals(Differ.ADDED)) {
+            if (currentState.equals(TreeBuilder.ADDED)) {
                 Object newValue = getPrintString(value.getLast());
                 addString += "added with value: " + newValue + "\n";
             }
 
-            if (currentState.equals(Differ.DELETED)) {
+            if (currentState.equals(TreeBuilder.DELETED)) {
                 addString += "removed" + "\n";
             }
 
-            if (currentState.equals(Differ.CHANGED)) {
+            if (currentState.equals(TreeBuilder.CHANGED)) {
                 Object oldValue = getPrintString(value.get(1));
                 Object newValue = getPrintString(value.getLast());
                 addString += "updated. From " + oldValue + " to " + newValue + "\n";
             }
 
-            if (currentState.equals(Differ.UNCHANGED)) {
+            if (currentState.equals(TreeBuilder.UNCHANGED)) {
                 addString = "";
             }
 

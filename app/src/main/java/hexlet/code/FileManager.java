@@ -1,4 +1,4 @@
-package hexlet.code.source;
+package hexlet.code;
 
 import java.nio.file.Path;
 
