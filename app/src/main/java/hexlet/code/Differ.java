@@ -14,8 +14,8 @@ public class Differ {
     public static final String DEFAULT_FORMAT = "stylish";
 
     public static String generate(String filePath1, String filePath2, String format) throws IOException {
-        var normalizedPath1 = FileManager.normaolizePath(Path.of(filePath1));
-        var normalizedPath2 = FileManager.normaolizePath(Path.of(filePath2));
+        var normalizedPath1 = FileManager.normalizePath(Path.of(filePath1));
+        var normalizedPath2 = FileManager.normalizePath(Path.of(filePath2));
 
 
         if (Files.notExists(normalizedPath1) || Files.notExists(normalizedPath2)) {

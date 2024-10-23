@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Stylish {
-    public static String stylish(Map<String, List<Object>> differenceMap) {
+    public static String formatStylish(Map<String, List<Object>> differenceMap) {
         StringBuilder result = new StringBuilder("{\n");
         differenceMap.forEach((key, value) -> {
             String addedString = "";

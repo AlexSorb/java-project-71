@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Plain {
 
-    public static String getPrintString(Object value) {
+    private static String getPrintString(Object value) {
 
         String result = value.toString();
 
@@ -26,7 +26,7 @@ public class Plain {
         return result;
     }
 
-    public static String plain(Map<String, List<Object>> differenceMap) {
+    public static String formatPlain(Map<String, List<Object>> differenceMap) {
         StringBuilder result = new StringBuilder();
         differenceMap.forEach((key, value) -> {
             String addString = "Property '" + key + "' was ";

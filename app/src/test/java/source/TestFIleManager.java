@@ -13,13 +13,13 @@ public class TestFIleManager {
     public void testNormalizePath() {
         var notNormalizePath = Paths.get("./src/test/java/resources");
         var normalizeAbsolutePath = Paths.get("src/test/java/resources").toAbsolutePath();
-        assertEquals(FileManager.normaolizePath(notNormalizePath), normalizeAbsolutePath);
+        assertEquals(FileManager.normalizePath(notNormalizePath), normalizeAbsolutePath);
     }
 
     @Test
     public void testNull() {
         var thrownFirstArg = assertThrows(IllegalArgumentException.class, () -> {
-            FileManager.normaolizePath(null);
+            FileManager.normalizePath(null);
         });
         assertEquals("The file path cannot be empty!", thrownFirstArg.getMessage());
     }

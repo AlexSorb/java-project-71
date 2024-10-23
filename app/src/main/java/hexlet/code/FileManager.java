@@ -3,8 +3,7 @@ package hexlet.code;
 import java.nio.file.Path;
 
 public class FileManager {
-
-    public static Path normaolizePath(Path noNormPath) throws IllegalArgumentException {
+    public static Path normalizePath(Path noNormPath) throws IllegalArgumentException {
 
         if (noNormPath == null) {
             throw new IllegalArgumentException("The file path cannot be empty!");

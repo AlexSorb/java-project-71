@@ -17,13 +17,13 @@ public class Formatter {
 
         switch (normalizeFormat) {
             case "plain":
-                result += Plain.plain(differenceMap);
+                result += Plain.formatPlain(differenceMap);
                 break;
             case "stylish":
-                result += Stylish.stylish(differenceMap);
+                result += Stylish.formatStylish(differenceMap);
                 break;
             case "json":
-                result += Json.json(differenceMap);
+                result += Json.formatJson(differenceMap);
                 break;
             default:
                 throw new IllegalArgumentException("Не найден формат");
